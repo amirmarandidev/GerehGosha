@@ -15,7 +15,7 @@ __project__ = "GerehGosha (گره‌گشا)"
 __version__ = "2.0.0-PRO"
 
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -97,6 +97,13 @@ def get_index():
     index_path = os.path.join(os.path.dirname(__file__), "static", "index.html")
     with open(index_path, "r", encoding="utf-8") as f:
         return HTMLResponse(content=f.read())
+
+@app.get("/favicon.ico", include_in_schema=False)
+async def get_favicon():
+    favicon_path = os.path.join(static_dir, "gereh.jpg")
+    if os.path.exists(favicon_path):
+        return FileResponse(favicon_path, media_type="image/jpeg")
+    return JSONResponse(status_code=404, content={"error": "Favicon not found"})
 
 @app.get("/api/status")
 async def get_status():

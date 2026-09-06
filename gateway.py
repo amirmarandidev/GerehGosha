@@ -14,9 +14,10 @@ __copyright__ = "Copyright (c) 2024-2026 Amir. All rights reserved."
 __project__ = "GerehGosha (گره‌گشا)"
 __version__ = "2.0.0-PRO"
 
+import os
 import sqlite3
 import requests
-from flask import Flask, request, session, redirect, url_for, render_template_string, Response
+from flask import Flask, request, session, redirect, url_for, render_template_string, Response, send_file
 from werkzeug.security import check_password_hash
 from werkzeug.middleware.proxy_fix import ProxyFix
 
@@ -42,6 +43,9 @@ LOGIN_HTML = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GerehGosha Gateway - Login</title>
+    <link rel="icon" type="image/jpeg" href="/static/gereh.jpg">
+    <link rel="shortcut icon" href="/static/gereh.jpg">
+    <link rel="apple-touch-icon" href="/static/gereh.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -92,18 +96,19 @@ LOGIN_HTML = """
             margin-bottom: 2rem;
         }
         .logo-icon {
-            width: 52px;
-            height: 52px;
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(16, 185, 129, 0.2));
-            border: 1px solid rgba(6, 182, 212, 0.4);
-            border-radius: 14px;
+            width: 58px;
+            height: 58px;
+            border-radius: 16px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 0.75rem;
-            box-shadow: 0 0 20px var(--primary-glow);
+            box-shadow: 0 0 25px var(--primary-glow);
+            overflow: hidden;
+            border: 1px solid rgba(6, 182, 212, 0.45);
+            background: #0f172a;
         }
-        .logo-icon svg { width: 28px; height: 28px; fill: var(--primary); }
+        .logo-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .logo-title {
             font-size: 1.6rem;
             font-weight: 700;
@@ -193,7 +198,7 @@ LOGIN_HTML = """
     <div class="login-card">
         <div class="logo-area">
             <div class="logo-icon">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                <img src="/static/gereh.jpg" alt="GerehGosha Logo">
             </div>
             <div class="logo-title">GerehGosha</div>
             <div class="logo-subtitle">گره‌گشا • Unified Gateway Access</div>
@@ -230,6 +235,9 @@ DASHBOARD_HTML = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GerehGosha Unified Dashboard</title>
+    <link rel="icon" type="image/jpeg" href="/static/gereh.jpg">
+    <link rel="shortcut icon" href="/static/gereh.jpg">
+    <link rel="apple-touch-icon" href="/static/gereh.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -269,16 +277,18 @@ DASHBOARD_HTML = """
             gap: 0.75rem;
         }
         .brand-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.25), rgba(16, 185, 129, 0.25));
+            width: 38px;
+            height: 38px;
             border: 1px solid rgba(6, 182, 212, 0.4);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
+            background: #0f172a;
+            box-shadow: 0 0 15px var(--primary-glow);
         }
-        .brand-icon svg { width: 20px; height: 20px; fill: var(--primary); }
+        .brand-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .brand-text h1 {
             font-size: 1.15rem;
             font-weight: 700;
@@ -460,7 +470,7 @@ DASHBOARD_HTML = """
     <div class="navbar">
         <div class="brand">
             <div class="brand-icon">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                <img src="/static/gereh.jpg" alt="GerehGosha Logo">
             </div>
             <div class="brand-text">
                 <h1>GerehGosha</h1>
@@ -532,8 +542,18 @@ def logout():
     session.clear()
     return redirect(url_for("login"))
 
+@app.route("/favicon.ico")
+@app.route("/static/gereh.jpg")
+def serve_gateway_logo():
+    p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "gereh.jpg")
+    if not os.path.exists(p):
+        p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pasarguard-tor", "static", "gereh.jpg")
+    return send_file(p, mimetype="image/jpeg")
+
 @app.before_request
 def require_login():
+    if request.path in ["/favicon.ico", "/static/gereh.jpg"]:
+        return
     if not session.get("logged_in") and request.endpoint != "login":
         return redirect(url_for("login"))
 
