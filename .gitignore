@@ -21,3 +21,6 @@ Tor/
 tor/
 *.exe
 credentials.txt
+wgcf
+*.log
+warp_tor.conf

@@ -1,7 +1,6 @@
 stem
 requests
 pysocks
-rich
 psutil
 fastapi
 uvicorn

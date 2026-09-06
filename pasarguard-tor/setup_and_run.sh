@@ -53,8 +53,6 @@ echo ""
 echo "Step 2: Cleaning up any hanging background processes..."
 pkill -9 -f "python api.py" > /dev/null 2>&1 || true
 pkill -9 -f "python3 api.py" > /dev/null 2>&1 || true
-pkill -9 -f "python tor_manager.py" > /dev/null 2>&1 || true
-pkill -9 -f "python3 tor_manager.py" > /dev/null 2>&1 || true
 pkill -9 -x "tor" > /dev/null 2>&1 || true
 if command -v fuser >/dev/null 2>&1; then
     fuser -k 54322/tcp > /dev/null 2>&1 || true
