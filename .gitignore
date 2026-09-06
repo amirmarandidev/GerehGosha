@@ -1,0 +1,23 @@
+# Excluded modules
+gerehgosha-carrier/
+
+# Temporary and local state
+fycj.json
+auth.db
+auth.db.bak
+*.tar.gz
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+tor_data/
+tor_fingerprints_cache.json
+manager_logs.txt
+country_ports.json
+pasarguard-tor/Tor/
+pasarguard-tor/tor/
+Tor/
+tor/
+*.exe
+credentials.txt

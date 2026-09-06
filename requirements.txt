@@ -1,0 +1,19 @@
+# GerehGosha (گره‌گشا) - Unified Requirements
+# Developed by Amir (@amirmarandidev)
+
+# Web Frameworks & Servers
+fastapi>=0.100.0
+uvicorn>=0.20.0
+flask>=2.3.0
+werkzeug>=2.3.0
+
+# HTTP & Network Clients
+httpx>=0.24.0
+requests>=2.31.0
+pysocks>=1.7.1
+stem>=1.8.2
+
+# Utilities & System Monitoring
+psutil>=5.9.0
+pydantic>=2.0.0
+rich>=13.0.0
