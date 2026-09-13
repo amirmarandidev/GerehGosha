@@ -1,5 +1,8 @@
 manager_logs.txt
+country_ports.json
 tor_data/
 tor/
+Tor/
 docs/
 __pycache__/
+*.exe
