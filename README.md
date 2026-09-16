@@ -1,7 +1,5 @@
 <div align="center">
 
-<img src="gereh.jpg" alt="GerehGosha Logo" width="130" height="130" style="border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-
 # 🧅 گره‌گشا · GerehGosha
 
 **سامانه هوشمند مدیریت ترافیک، مسیریابی پیازی چندکشوره و تزریق مستقیم به پاسارگارد**

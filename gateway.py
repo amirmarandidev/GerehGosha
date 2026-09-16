@@ -20,6 +20,7 @@ import requests
 from flask import Flask, request, session, redirect, url_for, render_template_string, Response, send_file
 from werkzeug.security import check_password_hash
 from werkzeug.middleware.proxy_fix import ProxyFix
+import ui_theme
 
 # Disable default static folder so we can proxy /static/
 app = Flask(__name__, static_folder=None)
@@ -43,9 +44,9 @@ LOGIN_HTML = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GerehGosha Gateway - Login</title>
-    <link rel="icon" type="image/jpeg" href="/static/gereh.jpg">
-    <link rel="shortcut icon" href="/static/gereh.jpg">
-    <link rel="apple-touch-icon" href="/static/gereh.jpg">
+    <link rel="icon" type="image/jpeg" href="/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -235,9 +236,9 @@ DASHBOARD_HTML = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GerehGosha Unified Dashboard</title>
-    <link rel="icon" type="image/jpeg" href="/static/gereh.jpg">
-    <link rel="shortcut icon" href="/static/gereh.jpg">
-    <link rel="apple-touch-icon" href="/static/gereh.jpg">
+    <link rel="icon" type="image/jpeg" href="/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -545,10 +546,11 @@ def logout():
 @app.route("/favicon.ico")
 @app.route("/static/gereh.jpg")
 def serve_gateway_logo():
-    p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "gereh.jpg")
-    if not os.path.exists(p):
-        p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pasarguard-tor", "static", "gereh.jpg")
-    return send_file(p, mimetype="image/jpeg")
+    return Response(
+        ui_theme.ICON_BYTES,
+        mimetype="image/jpeg",
+        headers={"Cache-Control": "public, max-age=86400"}
+    )
 
 @app.before_request
 def require_login():
