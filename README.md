@@ -1,12 +1,18 @@
 <div align="center">
 
-# 🧅 گره‌گشا · GerehGosha
+# 🌐 Language / زبان / Язык / 语言
 
-**سامانه هوشمند مدیریت ترافیک، مسیریابی پیازی چندکشوره و تزریق مستقیم به پاسارگارد**
+**English** • [فارسی](README_FA.md) • [Русский](README_RU.md) • [简体中文](README_ZH.md)
 
-توسعه‌یافته توسط [امیر مرندی](https://github.com/amirmarandidev)
+---
 
-[![Version](https://img.shields.io/badge/version-2.5.0-10b981?style=flat-square)](#)
+# 🧅 GerehGosha · گره‌گشا
+
+**Intelligent Multi-Country Traffic Routing & Panel Injection Utility**
+
+Developed with ❤️ by [Amir Marandi](https://github.com/amirmarandidev)
+
+[![Version](https://img.shields.io/badge/version-2.6.2-10b981?style=flat-square)](#)
 [![Telegram](https://img.shields.io/badge/telegram-@amirmarandidev-2CA5E0?style=flat-square&logo=telegram&logoColor=white)](https://t.me/amirmarandidev)
 [![License](https://img.shields.io/badge/license-open%20source-6b7280?style=flat-square)](#)
 
@@ -14,74 +20,90 @@
 
 ---
 
-### 💖 حمایت از پروژه
-این ابزار کاملاً رایگان و متن‌باز است. اگر برایتان سودمند بوده، با زدن ⭐ در گیت‌هاب یا حمایت رمزارزی به ادامه‌ی این مسیر انرژی دهید:
+### 💡 What is GerehGosha? (Important Clarification)
+
+> [!IMPORTANT]
+> **GerehGosha is NOT a standalone VPN panel or user-subscription system that generates direct VLESS/VMess configurations out of the box.**
+
+Instead, **GerehGosha is a specialized infrastructure routing utility and multi-exit traffic orchestrator**. It continuously scans, discovers, and sustains high-quality, low-latency international onion exit circuits, exposing them as clean, isolated local SOCKS5 endpoints (`9050+`). 
+
+Its primary superpower is **automated injection**: with a single click or API call, it injects these multi-country outbound nodes directly into your upstream management panels (such as **PasarGuard**) as configured inbounds and hosts. This allows panel operators to bundle multiple clean international exit locations directly into their clients' production configs without manual routing configurations.
+
+#### 🔌 Panel Compatibility & Roadmap:
+* ✅ **PasarGuard:** Fully supported with automated 1-click inbound/host injection via Admin API.
+* 🔄 **x-ui / 3X-UI:** *In active development* (Automated inbound & routing injection coming soon).
+* 🔄 **Marzban:** *In active development* (Node and outbound injection pipeline under active testing).
+
+---
+
+### 💖 Support the Project
+This utility is free and open source. If it saves you time and simplifies your routing infrastructure, support ongoing development by giving a ⭐ on GitHub or contributing via crypto:
 
 * 🔹 **USDT (BEP20):** `0xd593ae9D32bEA690EC62460C54BF3951aFFF7803`
 * 🔸 **USDT (TRC20):** `THaaHzoTwXfUfcrtYTDXRsMmk9qhnXa56M`
 
 ---
 
-### ⚠️ نکته حیاتی درباره انتخاب سرور (قبل از راه‌اندازی بخونید!)
+### ⚠️ Critical Hosting Advisory (Read Before Deployment!)
 
-برای اینکه از **گره‌گشا** نهایت سرعت و پایداری رو بگیرید و درگیر کندی یا تایم‌اوت نشید، توجه به محل میزبانی سرور بسیار کلیدیه:
+To ensure peak performance, minimal latency, and zero connection drops with GerehGosha, host location and provider network policies are critical:
 
-* ❌ **سرورهایی با عملکرد ضعیف و ریت‌لیمیت بالا:**  
-  سرورهای شرکت **هتزنر (Hetzner)** و دیتاسنترهایی مثل **OVH** و **DigitalOcean** به خاطر محدودیت‌ها و پالیسی‌های انضباطی روی پکت‌های شبکه پیازی، کیفیت ثابتی ندارند و باعث قطعی‌های مکرر یا تایم‌اوت می‌شوند.
+* ❌ **Providers with High Rate-Limits & Restricted Packet Policies:**  
+  Servers hosted on **Hetzner**, **OVH**, and **DigitalOcean** often enforce strict protocol rate-limits and aggressive traffic filtering on multi-hop onion circuits, resulting in unstable connections, high packet loss, or unexpected timeouts.
 
-* ✅ **سرورها و پلتفرم‌های تست‌شده و عالی:**  
-  این پروژه روی سرورهای ابری **Railway** و **Play2Go** (و همین‌طور **Fly.io**، **Vultr** و **Linode / Akamai**) بارها تست شده و عملکردی فوق‌العاده نرم، پایدار و پرسرعت ارائه می‌دهد.
+* ✅ **Tested & Recommended Hosting Platforms:**  
+  GerehGosha has undergone rigorous testing and delivers smooth, stable, high-throughput results on **Railway**, **Play2Go**, **Fly.io**, **Vultr**, and **Linode / Akamai**.
 
-> 💬 **یه کلام رفاقتی:**  
-> این پروژه قراره روزبه‌روز خفن‌تر بشه! مدام در حال بازنویسی، بهینه‌سازی مصرف رم و ارتقای متدهای ارتباطی هستم تا بالاترین پایداری ممکن رو تجربه کنید. خیالتون از آپدیت‌ها تخت باشه، فقط سرور رو هوشمندانه انتخاب کنید.
-
----
-
-### ✨ قابلیت‌های کلیدی
-
-* 🌐 **اسکن زنده و کشف خودکار:** پیدا کردن رله‌های سالم و پرسرعت بین‌المللی با بررسی لتنسی لحظه‌ای.
-* ⚡ **خروجی همزمان چند کشوره (Multi-Exit):** اجرای پایدار لوکیشن‌های منتخب (آمریکا، آلمان، هلند و ...) روی پورت‌های مجزا و ایزوله.
-* 💉 **تزریق مستقیم به پاسارگارد:** ساخت خودکار Inbound و Host متناظر با هر کشور در پنل PasarGuard فقط با یک کلیک.
-* 🔄 **دریافت آی‌پی جدید (New IP):** تشخیص افت کیفیت مسیر و تغییر بلافاصله‌ی آی‌پی خروجی با یک کلیک.
-* 🛡️ **داشبورد متمرکز و امن:** پنل وب سبک، واکنش‌گرا و سریع مجهز به احراز هویت دیتابیسی و مدیریت ادمین‌ها.
-* 💻 **کنسول ترمینال اختصاصی (CLI):** دستور سیستمی `gerehgosha` برای مدیریت آسان سرور، عیب‌یابی و لاگ زنده.
-* 🚀 **آپدیت هوشمند بدون قطعی دیتا:** دستور `gerehgosha update` برای دریافت کدهای تازه بدون از دست رفتن ادمین‌ها یا تنظیمات.
+> 💬 **A Word from the Developer:**  
+> This project is continually evolving! The routing engine, RAM footprint, and health-check mechanisms are continuously optimized to give you rock-solid stability. Choose your server platform wisely, and the engine will handle the rest.
 
 ---
 
-### 🚀 نصب و راه‌اندازی سریع
+### ✨ Key Capabilities
 
-#### ۱. سرور لینوکس (پیشنهادی)
-کافیست دستورات زیر را با دسترسی روت اجرا کنید:
+* 🌐 **Live Scanning & Auto-Discovery:** Real-time discovery of healthy, low-latency international relays across dozens of countries.
+* ⚡ **Multi-Country Concurrent Exits:** Run multiple isolated geographical exits (US, Germany, Netherlands, UK, etc.) simultaneously on dedicated local ports (`9050`, `9051`, etc.).
+* 💉 **1-Click Panel Injection:** Automatically register corresponding inbounds, ports, and tags directly inside PasarGuard with zero manual JSON editing.
+* 🔄 **Instant "New IP" Circuit Rotation:** Detect route degradation and obtain a brand-new exit IP and circuit instantly with a single button press.
+* 🛡️ **Secure Unified Gateway Dashboard:** Clean, responsive web dashboard with persistent database authentication, multi-language switching (English, Persian, Russian, Chinese), and credential management.
+* 💻 **Interactive CLI Console:** Built-in `gerehgosha` command for effortless service monitoring, diagnostics, and credential recovery.
+* 🚀 **Seamless Zero-Downtime Updates:** Run `gerehgosha update` to pull the latest code without wiping administrative accounts or existing configurations.
+
+---
+
+### 🚀 Quick Start & Installation
+
+#### 1. Linux Server (Recommended for Production)
+Run the following commands with `root` privileges:
 ```bash
 git clone https://github.com/thekourox/gerehgosha.git
 cd gerehgosha
 sudo bash install.sh
 ```
-> اسکریپت به صورت خودکار پیش‌نیازها را نصب، سرویس پس‌زمینه را تنظیم و اطلاعات ورود اولیه را تولید می‌کند.
+> The installer automatically configures dependencies, sets up systemd background services, and outputs initial administrator credentials.
 
-#### ۲. محیط ویندوز (تست و توسعه)
-فایل اجرایی زیر را باز کنید:
+#### 2. Windows Environment (Testing & Development)
+Launch the unified runner batch script:
 ```cmd
 run_windows.bat
 ```
 
 ---
 
-### 🔑 پورت‌ها و درگاه‌های دسترسی
+### 🔑 Ports & Architecture
 
-* 🌐 **داشبورد مدیریت اصلی:** `http://SERVER_IP:5000`
-* ⚙️ **درگاه مستقیم انجین:** `http://SERVER_IP:54322`
-* 🔌 **پورت‌های خروجی ساکس:** `9050+` (به ترتیب کشورهای انتخابی)
-* 📁 **مسیر نصب روی سرور:** `/opt/gerehgosha`
+* 🌐 **Unified Web Dashboard:** `http://SERVER_IP:5000`
+* ⚙️ **Direct Core Engine:** `http://SERVER_IP:54322`
+* 🔌 **Isolated SOCKS5 Outbounds:** `9050+` (Sequential ports per selected country)
+* 📁 **Default Installation Path:** `/opt/gerehgosha`
 
-> **مشاهده مشخصات ورود:** در هر زمان با اجرای دستور `gerehgosha` و انتخاب گزینه **Manage Admins**، مشخصات ورود قابل مشاهده و تغییر است.
+> **View Admin Credentials:** Retrieve or manage panel credentials at any time by running `gerehgosha` and selecting **Manage Admins**, or via CLI flags.
 
 ---
 
-### 💻 دستورات خط فرمان (CLI)
+### 💻 Command-Line Interface (CLI)
 
-با اجرای دستور `gerehgosha` در ترمینال، منوی تعاملی باز می‌شود:
+Typing `gerehgosha` in your terminal launches the interactive management suite:
 
 ```text
 =====================================
@@ -100,34 +122,43 @@ run_windows.bat
 =====================================
 ```
 
-#### دستورات تک‌خطی و مستقیم:
-* 🔄 **آپدیت سریع:** `gerehgosha update`
-* 🔑 **نمایش ادمین‌ها:** `python3 gerehgosha-cli.py --show-credentials`
-* 🩺 **بررسی سلامت سیستم:** `python3 gerehgosha-cli.py --status`
-* 🧹 **پاکسازی کش:** `python3 gerehgosha-cli.py --flush-cache`
+#### One-Liner Quick Commands:
+* 🔄 **Seamless Update:** `gerehgosha update`
+* 🔑 **Display Credentials:** `python3 /opt/gerehgosha/gerehgosha-cli.py --show-credentials`
+* 🩺 **Health Check & Status:** `python3 /opt/gerehgosha/gerehgosha-cli.py --status`
+* 🧹 **Flush Cache & Circuits:** `python3 /opt/gerehgosha/gerehgosha-cli.py --flush-cache`
 
 ---
 
-### ❓ سوالات متداول
+### 📖 Documentation & Tutorials
 
-* ❓ **رمز عبور پنل را فراموش کرده‌ام:**  
-  دستور `python3 /opt/gerehgosha/gerehgosha-cli.py --show-credentials` را در سرور بزنید تا مشخصات را ببینید.
-* ❓ **آیا تنظیمات با آپدیت پاک می‌شوند؟**  
-  خیر؛ با اجرای `gerehgosha update`، نسخه جدید بدون دست‌خوردن فایل دیتابیس یا تنظیمات جایگزین می‌شود.
-* ❓ **دیدن زنده لاگ‌های سرویس:**  
-  دستور `journalctl -u gerehgosha.service -f` را در ترمینال اجرا کنید.
+Looking for a step-by-step tutorial on how to configure circuits and connect with upstream panels?  
+Check out our [Usage Tutorial & Step-by-Step Guide](TUTORIAL.md).
 
 ---
 
-### 📢 ارتباط و پشتیبانی
+### ❓ Frequently Asked Questions (FAQ)
 
-* ✈️ **تلگرام:** [@amirmarandidev](https://t.me/amirmarandidev)
-* 🐙 **گیت‌هاب:** [amirmarandidev](https://github.com/amirmarandidev)
-* 💼 **لینکدین:** [amirmarandi](https://linkedin.com/in/amirmarandi)
-* 📧 **ایمیل:** [amirmarandidev@gmail.com](mailto:amirmarandidev@gmail.com)
+* ❓ **Can I use GerehGosha by itself to connect clients?**  
+  GerehGosha provides SOCKS5 proxies on ports `9050+`. While you can point local applications directly to these ports, it is primarily intended to be injected into panels like **PasarGuard** so they can serve as upstream exit nodes in VLESS/VMess configs.
+* ❓ **I forgot my web dashboard credentials:**  
+  Execute `python3 /opt/gerehgosha/gerehgosha-cli.py --show-credentials` on your server to retrieve active credentials.
+* ❓ **Will updating overwrite my database or settings?**  
+  No. The `gerehgosha update` utility automatically backs up `auth.db` and configuration files before pulling the latest codebase.
+* ❓ **How do I inspect live service logs?**  
+  Run `journalctl -u gerehgosha.service -f` (Gateway) or `journalctl -u tor-checker.service -f` (Engine).
+
+---
+
+### 📢 Community & Support
+
+* ✈️ **Telegram:** [@amirmarandidev](https://t.me/amirmarandidev)
+* 🐙 **GitHub:** [amirmarandidev](https://github.com/amirmarandidev)
+* 💼 **LinkedIn:** [amirmarandi](https://linkedin.com/in/amirmarandi)
+* 📧 **Email:** [amirmarandidev@gmail.com](mailto:amirmarandidev@gmail.com)
 
 <div align="center">
 
-🌟 **اگر این پروژه برایتان کاربردی بود، با دادن یک ستاره در گیت‌هاب از ما حمایت کنید.**
+🌟 **If GerehGosha helps your infrastructure, please star the repository on GitHub!**
 
 </div>

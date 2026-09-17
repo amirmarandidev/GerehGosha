@@ -17,6 +17,8 @@ manager_logs.txt
 country_ports.json
 pasarguard-tor/Tor/
 pasarguard-tor/tor/
+assets/Tor/
+assets/tor/
 Tor/
 tor/
 *.exe

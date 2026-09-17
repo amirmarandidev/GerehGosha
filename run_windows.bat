@@ -30,6 +30,8 @@ echo.
 
 :: 3. Check for Tor Expert Bundle on Windows
 set "TOR_FOUND=0"
+if exist "assets\Tor\tor.exe" set "TOR_FOUND=1"
+if exist "assets\tor\tor.exe" set "TOR_FOUND=1"
 if exist "pasarguard-tor\Tor\tor.exe" set "TOR_FOUND=1"
 if exist "pasarguard-tor\tor\tor.exe" set "TOR_FOUND=1"
 if exist "Tor\tor.exe" set "TOR_FOUND=1"
@@ -39,10 +41,10 @@ if %ERRORLEVEL% equ 0 set "TOR_FOUND=1"
 
 if "%TOR_FOUND%"=="0" (
     echo [*] Tor binary not detected. Downloading Tor Expert Bundle for Windows...
-    if not exist "pasarguard-tor\Tor" mkdir "pasarguard-tor\Tor"
+    if not exist "assets\Tor" mkdir "assets\Tor"
     curl -sSL "https://dist.torproject.org/torbrowser/15.0.17/tor-expert-bundle-windows-x86_64-15.0.17.tar.gz" -o "%TEMP%\tor_bundle.tar.gz"
     if exist "%TEMP%\tor_bundle.tar.gz" (
-        tar -xzf "%TEMP%\tor_bundle.tar.gz" -C "pasarguard-tor"
+        tar -xzf "%TEMP%\tor_bundle.tar.gz" -C "assets"
         del "%TEMP%\tor_bundle.tar.gz" >nul 2>&1
         echo [+] Tor Expert Bundle downloaded and extracted.
     ) else (

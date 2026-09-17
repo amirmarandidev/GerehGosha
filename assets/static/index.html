@@ -49,33 +49,64 @@
                     <span class="brand-fa">گره‌گشا</span>
                     <span class="version-tag">v2.5 Pro</span>
                 </div>
-                <span class="brand-subtitle">Autonomous Tor Mesh Orchestrator</span>
+                <span class="brand-subtitle" data-i18n="brand_subtitle">Autonomous Tor Mesh Orchestrator</span>
             </div>
         </div>
 
         <div class="nav-center-status">
             <div class="live-indicator-pill">
                 <span class="pulse-radar"></span>
-                <span class="indicator-label">ENGINE:</span>
+                <span class="indicator-label" data-i18n="indicator_engine">ENGINE:</span>
                 <span id="badge-status" class="badge badge-idle">IDLE</span>
             </div>
             <div class="node-pill">
                 <i class="fa-solid fa-network-wired"></i>
-                <span class="pill-label">CIRCUITS:</span>
+                <span class="pill-label" data-i18n="indicator_circuits">CIRCUITS:</span>
                 <span id="instance-count" class="count-badge">0 / 190</span>
             </div>
         </div>
 
         <div class="nav-actions">
-            <button id="btn-settings" class="btn btn-glass" title="Engine Settings">
+            <!-- Language Switcher Dropdown -->
+            <div class="lang-dropdown-container">
+                <button id="btn-lang-toggle" class="btn btn-glass lang-toggle-btn" title="Change Language / تغییر زبان" type="button">
+                    <i class="fa-solid fa-globe"></i>
+                    <span id="current-lang-tag">EN</span>
+                    <i class="fa-solid fa-chevron-down lang-caret"></i>
+                </button>
+                <div id="lang-dropdown-menu" class="lang-dropdown-menu hidden">
+                    <button type="button" class="lang-option-btn" data-lang="fa">
+                        <span class="flag-icon">🇮🇷</span>
+                        <span class="lang-text">فارسی</span>
+                        <i class="fa-solid fa-check active-check"></i>
+                    </button>
+                    <button type="button" class="lang-option-btn" data-lang="en">
+                        <span class="flag-icon">🇬🇧</span>
+                        <span class="lang-text">English</span>
+                        <i class="fa-solid fa-check active-check"></i>
+                    </button>
+                    <button type="button" class="lang-option-btn" data-lang="ru">
+                        <span class="flag-icon">🇷🇺</span>
+                        <span class="lang-text">Русский</span>
+                        <i class="fa-solid fa-check active-check"></i>
+                    </button>
+                    <button type="button" class="lang-option-btn" data-lang="zh">
+                        <span class="flag-icon">🇨🇳</span>
+                        <span class="lang-text">中文</span>
+                        <i class="fa-solid fa-check active-check"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button id="btn-settings" class="btn btn-glass" title="Engine Settings" data-i18n-title="nav_settings_title">
                 <i class="fa-solid fa-sliders"></i>
-                <span>Settings</span>
+                <span data-i18n="nav_settings">Settings</span>
             </button>
-            <button id="btn-inject-modal" class="btn btn-gradient-primary" title="Inject Inbounds to PasarGuard">
+            <button id="btn-inject-modal" class="btn btn-gradient-primary" title="Inject Inbounds to PasarGuard" data-i18n-title="nav_inject_title">
                 <i class="fa-solid fa-cloud-arrow-up"></i>
-                <span>Inject PasarGuard</span>
+                <span data-i18n="nav_inject">Inject PasarGuard</span>
             </button>
-            <a href="/logout" class="btn btn-logout" title="Logout from Gateway">
+            <a href="/logout" class="btn btn-logout" title="Logout from Gateway" data-i18n-title="nav_logout_title">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
             </a>
         </div>
@@ -93,12 +124,12 @@
                     <i class="fa-solid fa-server"></i>
                 </div>
                 <div class="metric-details">
-                    <span class="metric-caption">Active Proxy Circuits</span>
+                    <span class="metric-caption" data-i18n="metric_active_circuits">Active Proxy Circuits</span>
                     <div class="metric-val-row">
                         <span class="metric-number" id="metric-node-count">0</span>
                         <span class="metric-limit">/ 190 max</span>
                     </div>
-                    <span class="metric-trend"><i class="fa-solid fa-circle-check"></i> Distributed SOCKS5 Endpoints</span>
+                    <span class="metric-trend"><i class="fa-solid fa-circle-check"></i> <span data-i18n="metric_distributed_socks">Distributed SOCKS5 Endpoints</span></span>
                 </div>
             </div>
 
@@ -108,8 +139,8 @@
                     <i class="fa-solid fa-satellite-dish"></i>
                 </div>
                 <div class="metric-details metric-progress-details">
-                    <span class="metric-caption">Tor Consensus & Discovery</span>
-                    <p id="discovery-msg" class="discovery-status-text">Ready to start.</p>
+                    <span class="metric-caption" data-i18n="metric_consensus">Tor Consensus & Discovery</span>
+                    <p id="discovery-msg" class="discovery-status-text" data-i18n="discovery_ready">Ready to start.</p>
                     <div class="progress-track">
                         <div id="discovery-progress" class="progress-fill" style="width: 0%"></div>
                     </div>
@@ -120,20 +151,20 @@
             <div class="metric-card glass-card controller-card">
                 <div class="controller-content">
                     <div class="controller-input-wrap">
-                        <label for="max-countries">Max Nodes:</label>
+                        <label for="max-countries" data-i18n="label_max_nodes">Max Nodes:</label>
                         <input type="number" id="max-countries" value="20" min="1" max="190" class="sleek-input-sm">
                     </div>
                     <div class="controller-buttons">
                         <button id="btn-start" class="btn btn-emerald">
-                            <i class="fa-solid fa-play"></i> Start Engine
+                            <i class="fa-solid fa-play"></i> <span data-i18n="btn_start_engine">Start Engine</span>
                         </button>
                         <button id="btn-stop" class="btn btn-crimson">
-                            <i class="fa-solid fa-power-off"></i> Stop
+                            <i class="fa-solid fa-power-off"></i> <span data-i18n="btn_stop_engine">Stop</span>
                         </button>
                     </div>
-                    <button id="btn-locations" class="btn btn-glass btn-block btn-locations" title="Discover & pick your active exit locations">
+                    <button id="btn-locations" class="btn btn-glass btn-block btn-locations" title="Discover & pick your active exit locations" data-i18n-title="btn_locations_title">
                         <i class="fa-solid fa-earth-americas"></i>
-                        <span>Select Locations</span>
+                        <span data-i18n="btn_select_locations">Select Locations</span>
                         <span id="locations-count-badge" class="locations-badge">0</span>
                     </button>
                 </div>
@@ -149,14 +180,14 @@
                         <i class="fa-solid fa-globe"></i>
                     </div>
                     <div>
-                        <h2>Live Node Monitoring Console</h2>
-                        <p class="panel-subtitle">Real-time health verification, IP Geolocation, and TCP Latency telemetry</p>
+                        <h2 data-i18n="monitoring_title">Live Node Monitoring Console</h2>
+                        <p class="panel-subtitle" data-i18n="monitoring_subtitle">Real-time health verification, IP Geolocation, and TCP Latency telemetry</p>
                     </div>
                 </div>
 
                 <div class="table-search-box">
                     <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                    <input type="text" id="node-search" placeholder="Search country, port, or status..." class="search-input">
+                    <input type="text" id="node-search" placeholder="Search country, port, or status..." data-i18n-placeholder="search_placeholder" class="search-input">
                 </div>
             </div>
 
@@ -165,11 +196,11 @@
                 <table id="instances-table" class="data-table">
                     <thead>
                         <tr>
-                            <th style="width: 20%;"><i class="fa-solid fa-flag"></i> COUNTRY</th>
-                            <th style="width: 15%;"><i class="fa-solid fa-hashtag"></i> SOCKS PORT</th>
-                            <th style="width: 25%;"><i class="fa-solid fa-location-dot"></i> EXIT NODE LOCATION</th>
-                            <th style="width: 18%;"><i class="fa-solid fa-bolt"></i> PING (TCP)</th>
-                            <th style="width: 22%;"><i class="fa-solid fa-signal"></i> HEALTH STATUS</th>
+                            <th style="width: 20%;"><i class="fa-solid fa-flag"></i> <span data-i18n="th_country">COUNTRY</span></th>
+                            <th style="width: 15%;"><i class="fa-solid fa-hashtag"></i> <span data-i18n="th_socks_port">SOCKS PORT</span></th>
+                            <th style="width: 25%;"><i class="fa-solid fa-location-dot"></i> <span data-i18n="th_exit_node">EXIT NODE LOCATION</span></th>
+                            <th style="width: 18%;"><i class="fa-solid fa-bolt"></i> <span data-i18n="th_ping">PING (TCP)</span></th>
+                            <th style="width: 22%;"><i class="fa-solid fa-signal"></i> <span data-i18n="th_status">HEALTH STATUS</span></th>
                         </tr>
                     </thead>
                     <tbody id="instances-body">
@@ -187,8 +218,8 @@
                         <i class="fa-solid fa-layer-group"></i>
                     </div>
                     <div>
-                        <h2>PasarGuard Group A Lifecycle Controls</h2>
-                        <p class="panel-subtitle">Manage batch state, toggle routing rules, or perform bulk cleanup across PasarGuard cores</p>
+                        <h2 data-i18n="lifecycle_title">PasarGuard Group A Lifecycle Controls</h2>
+                        <p class="panel-subtitle" data-i18n="lifecycle_subtitle">Manage batch state, toggle routing rules, or perform bulk cleanup across PasarGuard cores</p>
                     </div>
                 </div>
             </div>
@@ -198,12 +229,12 @@
                     <div class="lifecycle-info">
                         <div class="lc-icon"><i class="fa-solid fa-play"></i></div>
                         <div>
-                            <h4>Enable Group A</h4>
-                            <p>Activate all injected Tor inbound listeners</p>
+                            <h4 data-i18n="enable_group_title">Enable Group A</h4>
+                            <p data-i18n="enable_group_desc">Activate all injected Tor inbound listeners</p>
                         </div>
                     </div>
                     <button id="btn-enable-group" class="btn btn-emerald-glass">
-                        <i class="fa-solid fa-check"></i> Enable
+                        <i class="fa-solid fa-check"></i> <span data-i18n="btn_enable">Enable</span>
                     </button>
                 </div>
 
@@ -211,12 +242,12 @@
                     <div class="lifecycle-info">
                         <div class="lc-icon"><i class="fa-solid fa-pause"></i></div>
                         <div>
-                            <h4>Disable Group A</h4>
-                            <p>Pause Tor inbound listeners without deletion</p>
+                            <h4 data-i18n="disable_group_title">Disable Group A</h4>
+                            <p data-i18n="disable_group_desc">Pause Tor inbound listeners without deletion</p>
                         </div>
                     </div>
                     <button id="btn-disable-group" class="btn btn-amber-glass">
-                        <i class="fa-solid fa-pause"></i> Disable
+                        <i class="fa-solid fa-pause"></i> <span data-i18n="btn_disable">Disable</span>
                     </button>
                 </div>
 
@@ -224,12 +255,12 @@
                     <div class="lifecycle-info">
                         <div class="lc-icon"><i class="fa-solid fa-trash-can"></i></div>
                         <div>
-                            <h4>Bulk Clean Up</h4>
-                            <p>Permanently remove Tor nodes & routing rules</p>
+                            <h4 data-i18n="cleanup_title">Bulk Clean Up</h4>
+                            <p data-i18n="cleanup_desc">Permanently remove Tor nodes & routing rules</p>
                         </div>
                     </div>
                     <button id="btn-cleanup-group" class="btn btn-crimson-glass">
-                        <i class="fa-solid fa-trash-can"></i> Purge All
+                        <i class="fa-solid fa-trash-can"></i> <span data-i18n="btn_purge">Purge All</span>
                     </button>
                 </div>
             </div>
@@ -257,90 +288,90 @@
             <div class="modal-header">
                 <div class="modal-title-wrap">
                     <i class="fa-solid fa-sliders"></i>
-                    <h3>Engine Resource Tuning</h3>
+                    <h3 data-i18n="settings_modal_title">Engine Resource Tuning</h3>
                 </div>
                 <span class="close-btn">&times;</span>
             </div>
             
             <div class="modal-body-scroll">
                 <div class="setting-group">
-                    <label for="set-ping">Ping Interval (Seconds) <span class="setting-hint">Higher = Lower CPU load</span></label>
+                    <label for="set-ping"><span data-i18n="lbl_ping_interval">Ping Interval (Seconds)</span> <span class="setting-hint" data-i18n="hint_ping">Higher = Lower CPU load</span></label>
                     <input type="number" id="set-ping" value="30" min="5" max="300" class="modal-input">
                 </div>
 
                 <div class="setting-group">
-                    <label for="set-ram">Tor RAM Limit (MB) <span class="setting-hint">Per proxy instance (e.g. 15)</span></label>
+                    <label for="set-ram"><span data-i18n="lbl_ram_limit">Tor RAM Limit (MB)</span> <span class="setting-hint" data-i18n="hint_ram">Per proxy instance (e.g. 15)</span></label>
                     <input type="number" id="set-ram" value="15" min="2" max="100" class="modal-input">
                 </div>
 
                 <div class="setting-group">
-                    <label for="set-bw">Bandwidth Limit (KB/s) <span class="setting-hint">0 = Unlimited</span></label>
+                    <label for="set-bw"><span data-i18n="lbl_bw_limit">Bandwidth Limit (KB/s)</span> <span class="setting-hint" data-i18n="hint_bw">0 = Unlimited</span></label>
                     <input type="number" id="set-bw" value="0" min="0" max="10000" class="modal-input">
                 </div>
 
                 <div class="setting-group">
-                    <label for="set-workers">Scheduler Workers <span class="setting-hint">0 = Auto (Optimized per CPU core)</span></label>
+                    <label for="set-workers"><span data-i18n="lbl_workers">Scheduler Workers</span> <span class="setting-hint" data-i18n="hint_workers">0 = Auto (Optimized per CPU core)</span></label>
                     <input type="number" id="set-workers" value="0" min="0" max="32" class="modal-input">
                 </div>
 
                 <div class="setting-group">
-                    <label for="set-exit-mode">Exit Relay Selection <span class="setting-hint">How Tor picks the exit inside each country</span></label>
+                    <label for="set-exit-mode"><span data-i18n="lbl_exit_mode">Exit Relay Selection</span> <span class="setting-hint" data-i18n="hint_exit_mode">How Tor picks the exit inside each country</span></label>
                     <select id="set-exit-mode" class="modal-select">
-                        <option value="country">Whole country, consensus-weighted (recommended)</option>
-                        <option value="fingerprints">Pin top relays by consensus weight (stricter, more fragile)</option>
+                        <option value="country" data-i18n="opt_exit_country">Whole country, consensus-weighted (recommended)</option>
+                        <option value="fingerprints" data-i18n="opt_exit_relays">Pin top relays by consensus weight (stricter, more fragile)</option>
                     </select>
                 </div>
 
                 <div class="local-switch-box">
                     <input type="checkbox" id="set-pin-guards" class="sleek-checkbox">
-                    <label for="set-pin-guards">Pin regional entry guards <span class="setting-hint">Off is safer: pinned guards + strict nodes can block all circuits</span></label>
+                    <label for="set-pin-guards"><span data-i18n="lbl_pin_guards">Pin regional entry guards</span> <span class="setting-hint" data-i18n="hint_pin_guards">Off is safer: pinned guards + strict nodes can block all circuits</span></label>
                 </div>
 
                 <div class="setting-group">
-                    <label for="set-host-country">Host Server Location <span class="setting-hint">Only used when guard pinning is on</span></label>
-                    <input type="text" id="set-host-country" placeholder="Leave blank for automatic IP detection" class="modal-input">
+                    <label for="set-host-country"><span data-i18n="lbl_host_country">Host Server Location</span> <span class="setting-hint" data-i18n="hint_host_country">Only used when guard pinning is on</span></label>
+                    <input type="text" id="set-host-country" placeholder="Leave blank for automatic IP detection" data-i18n-placeholder="host_country_placeholder" class="modal-input">
                 </div>
 
                 <div class="setting-group countries-section">
                     <div class="countries-header-row">
-                        <label>Preferred Exit Countries <span class="setting-hint">Only the checked locations are launched</span></label>
+                        <label><span data-i18n="lbl_preferred_countries">Preferred Exit Countries</span> <span class="setting-hint" data-i18n="hint_preferred_countries">Only the checked locations are launched</span></label>
                         <button id="btn-scan-countries" class="btn btn-secondary-sm">
-                            <i class="fa-solid fa-satellite-dish"></i> Live Network Scan
+                            <i class="fa-solid fa-satellite-dish"></i> <span data-i18n="btn_scan_network">Live Network Scan</span>
                         </button>
                     </div>
 
                     <div class="countries-toolbar">
                         <div class="countries-search-wrap">
                             <i class="fa-solid fa-magnifying-glass"></i>
-                            <input type="text" id="country-filter" placeholder="Filter locations (e.g. iceland, jp, nl)" class="countries-search-input" autocomplete="off">
+                            <input type="text" id="country-filter" placeholder="Filter locations (e.g. iceland, jp, nl)" data-i18n-placeholder="filter_locations_placeholder" class="countries-search-input" autocomplete="off">
                         </div>
                         <div class="countries-quick-actions">
-                            <button type="button" id="btn-countries-all" class="btn btn-secondary-sm" title="Select every discovered location">
-                                <i class="fa-solid fa-check-double"></i> Select All
+                            <button type="button" id="btn-countries-all" class="btn btn-secondary-sm" title="Select every discovered location" data-i18n-title="btn_select_all_title">
+                                <i class="fa-solid fa-check-double"></i> <span data-i18n="btn_select_all">Select All</span>
                             </button>
-                            <button type="button" id="btn-countries-top10" class="btn btn-secondary-sm" title="Select the 10 locations with the most exit relays">
-                                <i class="fa-solid fa-ranking-star"></i> Top 10
+                            <button type="button" id="btn-countries-top10" class="btn btn-secondary-sm" title="Select the 10 locations with the most exit relays" data-i18n-title="btn_top10_title">
+                                <i class="fa-solid fa-ranking-star"></i> <span data-i18n="btn_top10">Top 10</span>
                             </button>
-                            <button type="button" id="btn-countries-clear" class="btn btn-secondary-sm" title="Clear the current selection">
-                                <i class="fa-solid fa-eraser"></i> Clear
+                            <button type="button" id="btn-countries-clear" class="btn btn-secondary-sm" title="Clear the current selection" data-i18n-title="btn_clear_title">
+                                <i class="fa-solid fa-eraser"></i> <span data-i18n="btn_clear">Clear</span>
                             </button>
                         </div>
                     </div>
 
                     <div class="countries-meta-row">
-                        <span id="countries-selected-summary" class="countries-selected-summary">No locations selected yet.</span>
+                        <span id="countries-selected-summary" class="countries-selected-summary" data-i18n="no_locations_selected">No locations selected yet.</span>
                         <span id="countries-scan-source" class="countries-scan-source"></span>
                     </div>
 
                     <div id="countries-list" class="countries-grid">
-                        <span class="country-placeholder">Click 'Live Network Scan' to discover currently active Tor exit nodes...</span>
+                        <span class="country-placeholder" data-i18n="countries_placeholder">Click 'Live Network Scan' to discover currently active Tor exit nodes...</span>
                     </div>
                 </div>
             </div>
             
             <div class="modal-footer">
                 <button id="btn-save-settings" class="btn btn-gradient-primary btn-block">
-                    <i class="fa-solid fa-floppy-disk"></i> Save & Apply Configuration
+                    <i class="fa-solid fa-floppy-disk"></i> <span data-i18n="btn_save_settings">Save & Apply Configuration</span>
                 </button>
             </div>
         </div>
@@ -352,74 +383,74 @@
             <div class="modal-header">
                 <div class="modal-title-wrap">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
-                    <h3>Inject to PasarGuard Core</h3>
+                    <h3 data-i18n="inject_modal_title">Inject to PasarGuard Core</h3>
                 </div>
                 <span class="close-inject-btn close-btn">&times;</span>
             </div>
             
             <div class="modal-body-scroll">
                 <div class="setting-group">
-                    <label for="pasargard-url">PasarGuard Panel URL <span class="setting-hint">e.g. https://panel.example.com</span></label>
+                    <label for="pasargard-url"><span data-i18n="lbl_pasargard_url">PasarGuard Panel URL</span> <span class="setting-hint">e.g. https://panel.example.com</span></label>
                     <input type="text" id="pasargard-url" placeholder="https://panel.example.com" class="modal-input">
                 </div>
 
                 <div class="setting-group">
-                    <label for="pasargard-token">Admin API Bearer Token <span class="setting-hint">JWT Access Token</span></label>
+                    <label for="pasargard-token"><span data-i18n="lbl_pasargard_token">Admin API Bearer Token</span> <span class="setting-hint">JWT Access Token</span></label>
                     <input type="password" id="pasargard-token" placeholder="eyJhbGciOi..." class="modal-input">
                 </div>
 
                 <div class="local-switch-box">
                     <input type="checkbox" id="isLocalTor" checked class="sleek-checkbox">
-                    <label for="isLocalTor">Tor engine runs on the SAME server as Xray (outbounds dial 127.0.0.1 — recommended)</label>
+                    <label for="isLocalTor" data-i18n="lbl_local_tor">Tor engine runs on the SAME server as Xray (outbounds dial 127.0.0.1 — recommended)</label>
                 </div>
 
                 <div class="setting-group hidden" id="remote-tor-group">
-                    <label for="tor-host">Remote Tor Engine Address <span class="setting-hint">Only if Xray is on another server. That host must expose the SOCKS ports.</span></label>
+                    <label for="tor-host"><span data-i18n="lbl_remote_tor">Remote Tor Engine Address</span> <span class="setting-hint" data-i18n="hint_remote_tor">Only if Xray is on another server. That host must expose the SOCKS ports.</span></label>
                     <input type="text" id="tor-host" placeholder="10.0.0.5" class="modal-input">
                 </div>
 
                 <div class="setting-group">
-                    <label for="pasargard-core">Target Core <span class="setting-hint">Select destination Xray/SingBox core</span></label>
+                    <label for="pasargard-core"><span data-i18n="lbl_target_core">Target Core</span> <span class="setting-hint" data-i18n="hint_target_core">Select destination Xray/SingBox core</span></label>
                     <div class="input-with-action">
                         <select id="pasargard-core" class="modal-select">
-                            <option value="">-- Load Cores First --</option>
+                            <option value="" data-i18n="opt_load_cores_first">-- Load Cores First --</option>
                         </select>
                         <button id="btn-load-cores" class="btn btn-secondary-sm">
-                            <i class="fa-solid fa-server"></i> Load Cores
+                            <i class="fa-solid fa-server"></i> <span data-i18n="btn_load_cores">Load Cores</span>
                         </button>
                     </div>
                 </div>
 
                 <div class="setting-group">
-                    <label for="pasargard-template">Template Inbound <span class="setting-hint">Clones protocol &amp; security only — its port is ignored</span></label>
+                    <label for="pasargard-template"><span data-i18n="lbl_template_inbound">Template Inbound</span> <span class="setting-hint" data-i18n="hint_template_inbound">Clones protocol &amp; security only — its port is ignored</span></label>
                     <div class="input-with-action">
                         <select id="pasargard-template" class="modal-select">
-                            <option value="">-- Load Inbounds First --</option>
+                            <option value="" data-i18n="opt_load_inbounds_first">-- Load Inbounds First --</option>
                         </select>
                         <button id="btn-load-inbounds" class="btn btn-secondary-sm">
-                            <i class="fa-solid fa-rotate"></i> Load Inbounds
+                            <i class="fa-solid fa-rotate"></i> <span data-i18n="btn_load_inbounds">Load Inbounds</span>
                         </button>
                     </div>
                 </div>
 
                 <div class="setting-group">
-                    <label for="port-strategy">Inbound Port Strategy <span class="setting-hint">How each node's client-facing port is chosen</span></label>
+                    <label for="port-strategy"><span data-i18n="lbl_port_strategy">Inbound Port Strategy</span> <span class="setting-hint" data-i18n="hint_port_strategy">How each node's client-facing port is chosen</span></label>
                     <select id="port-strategy" class="modal-select">
-                        <option value="base">Sequential from base port (default)</option>
-                        <option value="keep">Keep the port existing hosts already use</option>
-                        <option value="cloudflare">Cloudflare-proxyable TLS ports (2053, 2083, 2087, 2096, 8443, 443)</option>
+                        <option value="base" data-i18n="opt_strategy_base">Sequential from base port (default)</option>
+                        <option value="keep" data-i18n="opt_strategy_keep">Keep the port existing hosts already use</option>
+                        <option value="cloudflare" data-i18n="opt_strategy_cf">Cloudflare-proxyable TLS ports (2053, 2083, 2087, 2096, 8443, 443)</option>
                     </select>
                 </div>
 
                 <div class="setting-group">
                     <div class="countries-header-row">
-                        <label for="inbound-base-port">Base Inbound Port <span class="setting-hint">Nodes are numbered upward from here</span></label>
+                        <label for="inbound-base-port"><span data-i18n="lbl_base_inbound_port">Base Inbound Port</span> <span class="setting-hint" data-i18n="hint_base_port">Nodes are numbered upward from here</span></label>
                         <div class="countries-quick-actions">
-                            <button type="button" id="btn-renumber-ports" class="btn btn-secondary-sm" title="Re-number every node sequentially from the base port">
-                                <i class="fa-solid fa-arrow-down-1-9"></i> Re-number
+                            <button type="button" id="btn-renumber-ports" class="btn btn-secondary-sm" title="Re-number every node sequentially from the base port" data-i18n-title="btn_renumber_title">
+                                <i class="fa-solid fa-arrow-down-1-9"></i> <span data-i18n="btn_renumber">Re-number</span>
                             </button>
-                            <button type="button" id="btn-save-ports" class="btn btn-secondary-sm" title="Remember these ports for future injections">
-                                <i class="fa-solid fa-floppy-disk"></i> Save Ports
+                            <button type="button" id="btn-save-ports" class="btn btn-secondary-sm" title="Remember these ports for future injections" data-i18n-title="btn_save_ports_title">
+                                <i class="fa-solid fa-floppy-disk"></i> <span data-i18n="btn_save_ports">Save Ports</span>
                             </button>
                         </div>
                     </div>
@@ -428,13 +459,13 @@
 
                 <div class="setting-group">
                     <div class="countries-header-row">
-                        <label>Nodes Queued for Injection <span class="setting-hint">Inbound port is editable — the outbound always keeps each location's fixed SOCKS port</span></label>
-                        <button type="button" id="btn-diagnose" class="btn btn-secondary-sm" title="Check Tor SOCKS liveness and whether the inbound ports are reachable">
-                            <i class="fa-solid fa-stethoscope"></i> Test Connectivity
+                        <label><span data-i18n="lbl_queued_nodes">Nodes Queued for Injection</span> <span class="setting-hint" data-i18n="hint_queued_nodes">Inbound port is editable — the outbound always keeps each location's fixed SOCKS port</span></label>
+                        <button type="button" id="btn-diagnose" class="btn btn-secondary-sm" title="Check Tor SOCKS liveness and whether the inbound ports are reachable" data-i18n-title="btn_diagnose_title">
+                            <i class="fa-solid fa-stethoscope"></i> <span data-i18n="btn_diagnose">Test Connectivity</span>
                         </button>
                     </div>
                     <div id="inject-preview" class="inject-preview">
-                        <span class="country-placeholder">Loading active instances...</span>
+                        <span class="country-placeholder" data-i18n="loading_active_instances">Loading active instances...</span>
                     </div>
                     <div id="inject-warnings" class="inject-warnings hidden"></div>
                 </div>
@@ -442,7 +473,7 @@
             
             <div class="modal-footer">
                 <button id="btn-execute-inject" class="btn btn-gradient-primary btn-block">
-                    <i class="fa-solid fa-bolt"></i> Execute Injection
+                    <i class="fa-solid fa-bolt"></i> <span data-i18n="btn_execute_inject">Execute Injection</span>
                 </button>
             </div>
         </div>
