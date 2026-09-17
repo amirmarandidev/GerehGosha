@@ -73,14 +73,21 @@
 
 ### 🚀 快速安装与运行
 
-#### 1. Linux 服务器（生产环境推荐）
-使用 `root` 权限执行以下命令：
+#### 1. 单行命令极速安装（Linux / 生产推荐）
+使用 root 权限在服务器终端复制并回车执行以下一行命令即可：
 ```bash
-git clone https://github.com/thekourox/gerehgosha.git
-cd gerehgosha
+sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/amirmarandidev/GerehGosha/master/gerehgosha.sh)" @ install
+```
+> 💡 **便捷操作：** 您还可以直接通过该命令执行快速更新或彻底卸载：
+> - **平滑升级：** `sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/amirmarandidev/GerehGosha/master/gerehgosha.sh)" @ update`
+> - **彻底卸载：** `sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/amirmarandidev/GerehGosha/master/gerehgosha.sh)" @ uninstall`
+
+#### 备选方式：手动 Git Clone
+```bash
+git clone https://github.com/amirmarandidev/GerehGosha.git /opt/gerehgosha
+cd /opt/gerehgosha
 sudo bash install.sh
 ```
-> 安装脚本将自动安装系统依赖、配置 systemd 后台常驻服务，并在终端打印初始管理员凭据。
 
 #### 2. Windows 环境（测试与开发）
 双击运行控制台批处理文件：

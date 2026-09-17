@@ -73,14 +73,21 @@ To ensure peak performance, minimal latency, and zero connection drops with Gere
 
 ### 🚀 Quick Start & Installation
 
-#### 1. Linux Server (Recommended for Production)
-Run the following commands with `root` privileges:
+#### 1. One-Line Fast Install (Linux / Production)
+Run this single command in your server terminal with root privileges:
 ```bash
-git clone https://github.com/thekourox/gerehgosha.git
-cd gerehgosha
+sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/amirmarandidev/GerehGosha/master/gerehgosha.sh)" @ install
+```
+> 💡 **Tip:** You can also run updates or uninstallations directly via:
+> - **Update:** `sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/amirmarandidev/GerehGosha/master/gerehgosha.sh)" @ update`
+> - **Uninstall:** `sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/amirmarandidev/GerehGosha/master/gerehgosha.sh)" @ uninstall`
+
+#### Alternative: Manual Git Clone
+```bash
+git clone https://github.com/amirmarandidev/GerehGosha.git /opt/gerehgosha
+cd /opt/gerehgosha
 sudo bash install.sh
 ```
-> The installer automatically configures dependencies, sets up systemd background services, and outputs initial administrator credentials.
 
 #### 2. Windows Environment (Testing & Development)
 Launch the unified runner batch script:

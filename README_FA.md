@@ -73,14 +73,21 @@
 
 ### 🚀 نصب و راه‌اندازی سریع
 
-#### ۱. سرور لینوکس (پیشنهاد اصلی)
-کافیه دستورات زیر رو با دسترسی روت (`root`) توی ترمینال بزنید:
+#### ۱. نصب فوری با یک خط دستور (لینوکس / سرور اصلی)
+فقط کافیه این یه خط دستور رو کپی کنید و توی ترمینال سرورتون (با دسترسی روت) اینتر بزنید:
 ```bash
-git clone https://github.com/thekourox/gerehgosha.git
-cd gerehgosha
+sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/amirmarandidev/GerehGosha/master/gerehgosha.sh)" @ install
+```
+> 💡 **دم‌دستی و کاربردی:** برای آپدیت یا حذف هم می‌تونید از همین دستورات سریع استفاده کنید:
+> - **آپدیت:** `sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/amirmarandidev/GerehGosha/master/gerehgosha.sh)" @ update`
+> - **حذف کامل:** `sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/amirmarandidev/GerehGosha/master/gerehgosha.sh)" @ uninstall`
+
+#### روش جایگزین: کلون دستی از گیت‌هاب
+```bash
+git clone https://github.com/amirmarandidev/GerehGosha.git /opt/gerehgosha
+cd /opt/gerehgosha
 sudo bash install.sh
 ```
-> اسکریپت خودش خودکار همه‌چیز رو نصب میکنه، سرویس‌های پس‌زمینه رو بالا میاره و در آخر اطلاعات ورود به پنل رو بهتون نشون میده.
 
 #### ۲. محیط ویندوز (برای تست و توسعه)
 کافیه فایل زیر رو اجرا کنید:
