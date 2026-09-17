@@ -24,6 +24,16 @@ echo -e "${CYAN}        GerehGosha (گره‌گشا) Unified Gateway Installer  
 echo -e "${CYAN}              Developed by Amir (@amirmarandidev)               ${NC}"
 echo -e "${CYAN}================================================================${NC}"
 
+# Handle @ symbol if used in installation (e.g. bash -c "$(curl ...)" @ install)
+if [ "${1:-}" = "@" ]; then
+    shift
+fi
+
+ACTION="${1:-install}"
+if [ "$ACTION" == "update" ] || [ "$ACTION" == "--update" ]; then
+    export AUTO_UPDATE="1"
+fi
+
 # 1. Check Root
 if [ "$EUID" -ne 0 ]; then
   echo -e "${RED}[!] Please run this script as root (use sudo).${NC}"
@@ -32,7 +42,40 @@ fi
 
 # 2. Variables & Directories
 INSTALL_DIR="/opt/gerehgosha"
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" 2>/dev/null && pwd )"
+REPO_URL="https://github.com/amirmarandidev/GerehGosha.git"
+
+# Detect if running remotely via curl/pipe without repository files
+if [ ! -f "$SCRIPT_DIR/gateway.py" ]; then
+    echo -e "${CYAN}[*] Remote execution detected. Setting up GerehGosha repository...${NC}"
+    if ! command -v git >/dev/null 2>&1 || ! command -v curl >/dev/null 2>&1; then
+        apt-get update -y -q > /dev/null 2>&1 || true
+        apt-get install -y -q git curl wget > /dev/null 2>&1 || true
+    fi
+
+    if [ ! -d "$INSTALL_DIR" ]; then
+        echo -e "${CYAN}[*] Cloning GerehGosha into $INSTALL_DIR...${NC}"
+        mkdir -p "$INSTALL_DIR"
+        git clone "$REPO_URL" "$INSTALL_DIR"
+    elif [ ! -d "$INSTALL_DIR/.git" ]; then
+        echo -e "${CYAN}[*] Initializing Git repository in $INSTALL_DIR...${NC}"
+        TMP_DIR=$(mktemp -d)
+        git clone "$REPO_URL" "$TMP_DIR"
+        cp -rn "$TMP_DIR/." "$INSTALL_DIR/" 2>/dev/null || cp -rf "$TMP_DIR/." "$INSTALL_DIR/"
+        rm -rf "$TMP_DIR"
+    else
+        echo -e "${CYAN}[*] Pulling latest updates into $INSTALL_DIR...${NC}"
+        cd "$INSTALL_DIR"
+        git pull origin master > /dev/null 2>&1 || true
+    fi
+
+    find "$INSTALL_DIR" -type f \( -name "*.sh" -o -name "*.py" \) -exec sed -i 's/\r$//' {} + 2>/dev/null || true
+    chmod +x "$INSTALL_DIR/install.sh" 2>/dev/null || true
+    chmod +x "$INSTALL_DIR/gerehgosha.sh" 2>/dev/null || true
+    chmod +x "$INSTALL_DIR/gerehgosha_manager.sh" 2>/dev/null || true
+    cd "$INSTALL_DIR"
+    exec bash "$INSTALL_DIR/install.sh" "$@"
+fi
 
 # Detect legacy /opt/pepepanel directory and offer seamless migration
 if [ -d "/opt/pepepanel" ] && [ ! -d "$INSTALL_DIR" ]; then
@@ -145,7 +188,7 @@ from werkzeug.security import generate_password_hash
 user = os.environ.get('ADMIN_USER')
 pwd = os.environ.get('ADMIN_PASS')
 conn = sqlite3.connect('auth.db')
-conn.execute('CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password_hash TEXT)')
+conn.execute('CREATE TABLE IF NOT EXISTS users (username TEXT PRIMARY KEY, password_hash TEXT, preferred_language TEXT)')
 hashed = generate_password_hash(pwd)
 conn.execute('INSERT OR REPLACE INTO users (username, password_hash) VALUES (?, ?)', (user, hashed))
 conn.commit()

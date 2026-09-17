@@ -33,7 +33,7 @@ graph LR
 
 ## 🛠️ Step 1: Initial Setup & Access
 
-1. Ensure GerehGosha is installed on your server (via `sudo bash install.sh`).
+1. Ensure GerehGosha is installed on your server (via the one-line installer or `sudo bash install.sh`).
 2. Log in to the Unified Dashboard at `http://YOUR_SERVER_IP:5000`.
 3. If this is your first login, select your preferred language (English, Persian, Russian, or Chinese).
 

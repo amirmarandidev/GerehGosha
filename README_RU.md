@@ -73,14 +73,21 @@
 
 ### 🚀 Быстрый запуск и установка
 
-#### 1. Linux-сервер (Рекомендуется для продакшена)
-Выполните следующие команды от имени `root`:
+#### 1. Быстрая установка одной командой (Linux / Продакшен)
+Скопируйте и выполните одну команду в терминале сервера от имени root:
 ```bash
-git clone https://github.com/thekourox/gerehgosha.git
-cd gerehgosha
+sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/amirmarandidev/GerehGosha/master/gerehgosha.sh)" @ install
+```
+> 💡 **Полезные команды:** Через эту же строку можно выполнять обновление или удаление:
+> - **Обновление:** `sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/amirmarandidev/GerehGosha/master/gerehgosha.sh)" @ update`
+> - **Удаление:** `sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/amirmarandidev/GerehGosha/master/gerehgosha.sh)" @ uninstall`
+
+#### Альтернатива: Ручное клонирование из Git
+```bash
+git clone https://github.com/amirmarandidev/GerehGosha.git /opt/gerehgosha
+cd /opt/gerehgosha
 sudo bash install.sh
 ```
-> Скрипт автоматически установит зависимости, настроит службы systemd и сгенерирует учетные данные первого входа.
 
 #### 2. Windows (Для тестов и разработки)
 Запустите командный файл:
