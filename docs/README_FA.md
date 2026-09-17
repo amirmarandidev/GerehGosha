@@ -16,6 +16,10 @@
 [![Telegram](https://img.shields.io/badge/telegram-@amirmarandidev-2CA5E0?style=flat-square&logo=telegram&logoColor=white)](https://t.me/amirmarandidev)
 [![License](https://img.shields.io/badge/license-open%20source-6b7280?style=flat-square)](#)
 
+<br><br>
+
+![پیش‌نمایش داشبورد گره‌گشا](screenshot.png)
+
 </div>
 
 ---
