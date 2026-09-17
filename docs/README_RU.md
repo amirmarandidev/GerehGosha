@@ -2,7 +2,7 @@
 
 # 🌐 Language / زبان / Язык / 语言
 
-[English](README.md) • [فارسی](README_FA.md) • **Русский** • [简体中文](README_ZH.md)
+[English](../README.md) • [فارسی](README_FA.md) • **Русский** • [简体中文](README_ZH.md)
 
 ---
 

@@ -2,7 +2,7 @@
 
 # 🌐 Tutorial Language / زبان آموزش / Язык руководства / 教程语言
 
-**English** • [فارسی](TUTORIAL_FA.md) • [Русский](TUTORIAL_RU.md) • [简体中文](TUTORIAL_ZH.md)
+**English** • [فارسی](docs/TUTORIAL_FA.md) • [Русский](docs/TUTORIAL_RU.md) • [简体中文](docs/TUTORIAL_ZH.md)
 
 ---
 

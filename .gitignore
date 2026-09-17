@@ -11,6 +11,8 @@ __pycache__/
 *$py.class
 venv/
 .env
+.kilo/
+.kilo
 tor_data/
 tor_fingerprints_cache.json
 manager_logs.txt
