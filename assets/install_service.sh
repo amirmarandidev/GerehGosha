@@ -46,7 +46,7 @@ EOF
 # Reload systemd and enable/start the service
 systemctl daemon-reload
 systemctl enable tor-checker
-systemctl start tor-checker
+systemctl restart tor-checker
 
 echo ""
 echo "============================================================"

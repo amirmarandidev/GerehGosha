@@ -164,6 +164,15 @@ pip3 install flask requests werkzeug --break-system-packages > /dev/null 2>&1 ||
 
 # 5. Execute Sub-Installer (GerehGosha Tor Engine)
 echo -e "${YELLOW}[*] Executing sub-installer for GerehGosha Tor Engine...${NC}"
+
+# Terminate any lingering background engine processes from old versions
+pkill -9 -f "api.py" > /dev/null 2>&1 || true
+
+# Maintain backward-compatibility symlink so legacy services never crash
+if [ ! -e "$INSTALL_DIR/pasarguard-tor" ] && [ -d "$INSTALL_DIR/assets" ]; then
+    ln -s "$INSTALL_DIR/assets" "$INSTALL_DIR/pasarguard-tor" 2>/dev/null || true
+fi
+
 if [ -f "$INSTALL_DIR/assets/install_service.sh" ]; then
     chmod +x "$INSTALL_DIR/assets/install_service.sh"
     cd "$INSTALL_DIR/assets" && ./install_service.sh
@@ -173,6 +182,8 @@ elif [ -f "$INSTALL_DIR/pasarguard-tor/install_service.sh" ]; then
     cd "$INSTALL_DIR/pasarguard-tor" && ./install_service.sh
     cd "$INSTALL_DIR"
 fi
+systemctl daemon-reload 2>/dev/null || true
+systemctl restart tor-checker 2>/dev/null || true
 # GerehGosha Secondary carrier is isolated and excluded from active installation
 
 # 6. Auto-Generate Secure Admin Credentials (if no DB exists)
