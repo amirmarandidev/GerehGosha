@@ -34,7 +34,9 @@ update_gerehgosha() {
     if [ -f "$APP_DIR/credentials.txt" ]; then
         cp -f "$APP_DIR/credentials.txt" "/tmp/credentials.txt.bak"
     fi
-    if [ -f "$APP_DIR/pasarguard-tor/config.json" ]; then
+    if [ -f "$APP_DIR/assets/config.json" ]; then
+        cp -f "$APP_DIR/assets/config.json" "/tmp/tor_config.json.bak"
+    elif [ -f "$APP_DIR/pasarguard-tor/config.json" ]; then
         cp -f "$APP_DIR/pasarguard-tor/config.json" "/tmp/tor_config.json.bak"
     fi
 
@@ -79,12 +81,16 @@ install_services() {
     echo "====================================="
     echo " Installing GerehGosha Tor Engine..."
     echo "====================================="
-    if [ -f "$APP_DIR/pasarguard-tor/install_service.sh" ]; then
+    if [ -f "$APP_DIR/assets/install_service.sh" ]; then
+        chmod +x "$APP_DIR/assets/install_service.sh"
+        cd "$APP_DIR/assets" && ./install_service.sh
+        cd "$APP_DIR"
+    elif [ -f "$APP_DIR/pasarguard-tor/install_service.sh" ]; then
         chmod +x "$APP_DIR/pasarguard-tor/install_service.sh"
         cd "$APP_DIR/pasarguard-tor" && ./install_service.sh
         cd "$APP_DIR"
     else
-        echo "Error: pasarguard-tor/install_service.sh not found."
+        echo "Error: assets/install_service.sh not found."
     fi
 
     # GerehGosha Secondary carrier is isolated and skipped in active installation

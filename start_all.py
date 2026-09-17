@@ -14,6 +14,15 @@ import os
 import platform
 import sqlite3
 
+if sys.platform == 'win32':
+    try:
+        if hasattr(sys.stdout, 'reconfigure'):
+            sys.stdout.reconfigure(encoding='utf-8')
+        if hasattr(sys.stderr, 'reconfigure'):
+            sys.stderr.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
+
 def init_auth_db_if_needed():
     """Ensure auth.db exists and active credentials are displayed so user is never locked out."""
     try:
@@ -69,7 +78,9 @@ if __name__ == "__main__":
         procs.append(run_service("GerehGosha Gateway", f'"{sys.executable}" gateway.py', cwd=os.getcwd()))
         
         # Start GerehGosha Tor Engine (Port 54322)
-        tor_dir = os.path.join(os.getcwd(), "pasarguard-tor")
+        tor_dir = os.path.join(os.getcwd(), "assets")
+        if not os.path.exists(tor_dir):
+            tor_dir = os.path.join(os.getcwd(), "pasarguard-tor")
         procs.append(run_service("GerehGosha Tor Engine", f'"{sys.executable}" api.py', cwd=tor_dir))
         
         # Note: GerehGosha Secondary carrier is currently isolated in offline standby

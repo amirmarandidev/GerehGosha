@@ -101,6 +101,8 @@ find "$INSTALL_DIR" -type f \( -name "*.sh" -o -name "*.py" \) -exec sed -i 's/\
 # Set execution permissions
 chmod +x "$INSTALL_DIR/install.sh" 2>/dev/null || true
 chmod +x "$INSTALL_DIR/gerehgosha_manager.sh" 2>/dev/null || true
+chmod +x "$INSTALL_DIR/assets/install_service.sh" 2>/dev/null || true
+chmod +x "$INSTALL_DIR/assets/setup_and_run.sh" 2>/dev/null || true
 chmod +x "$INSTALL_DIR/pasarguard-tor/install_service.sh" 2>/dev/null || true
 chmod +x "$INSTALL_DIR/pasarguard-tor/setup_and_run.sh" 2>/dev/null || true
 chmod +x "$INSTALL_DIR/gerehgosha-carrier/install.sh" 2>/dev/null || true
@@ -119,7 +121,11 @@ pip3 install flask requests werkzeug --break-system-packages > /dev/null 2>&1 ||
 
 # 5. Execute Sub-Installer (GerehGosha Tor Engine)
 echo -e "${YELLOW}[*] Executing sub-installer for GerehGosha Tor Engine...${NC}"
-if [ -f "$INSTALL_DIR/pasarguard-tor/install_service.sh" ]; then
+if [ -f "$INSTALL_DIR/assets/install_service.sh" ]; then
+    chmod +x "$INSTALL_DIR/assets/install_service.sh"
+    cd "$INSTALL_DIR/assets" && ./install_service.sh
+    cd "$INSTALL_DIR"
+elif [ -f "$INSTALL_DIR/pasarguard-tor/install_service.sh" ]; then
     chmod +x "$INSTALL_DIR/pasarguard-tor/install_service.sh"
     cd "$INSTALL_DIR/pasarguard-tor" && ./install_service.sh
     cd "$INSTALL_DIR"

@@ -127,6 +127,26 @@ async def get_status():
     core.dashboard_state["copyright"] = "Copyright (c) 2024-2026 Amir. All rights reserved."
     return core.dashboard_state
 
+@app.get("/api/language")
+async def get_language(request: Request):
+    user_lang = request.cookies.get("user_lang", "en")
+    if user_lang not in ["fa", "en", "ru", "zh"]:
+        user_lang = "en"
+    return {"language": user_lang}
+
+@app.post("/api/language")
+async def set_language(request: Request):
+    try:
+        body = await request.json()
+        lang = body.get("language", "en")
+    except Exception:
+        lang = "en"
+    if lang not in ["fa", "en", "ru", "zh"]:
+        lang = "en"
+    resp = JSONResponse({"status": "ok", "language": lang})
+    resp.set_cookie("user_lang", lang, max_age=365*86400, samesite="lax")
+    return resp
+
 CONFIG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.json")
 
 # PasarGuard inbounds are numbered from here, NOT from the template inbound's port.

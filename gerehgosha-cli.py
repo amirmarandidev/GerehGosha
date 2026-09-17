@@ -10,7 +10,7 @@
 __author__ = "Amir (@amirmarandidev)"
 __copyright__ = "Copyright (c) 2024-2026 Amir. All rights reserved."
 __project__ = "GerehGosha (گره‌گشا)"
-__version__ = "2.5.0-CLI"
+__version__ = "2.6.2-CLI"
 
 import os
 import sys
@@ -370,7 +370,7 @@ def fetch_pasarguard_token():
 
 def flush_tor_cache():
     print("\n[*] Cleaning Tor temporary state and caches...")
-    base_dirs = [os.path.join(BASE_DIR, "tor_data"), os.path.join(BASE_DIR, "pasarguard-tor", "tor_data")]
+    base_dirs = [os.path.join(BASE_DIR, "tor_data"), os.path.join(BASE_DIR, "assets", "tor_data"), os.path.join(BASE_DIR, "pasarguard-tor", "tor_data")]
     import shutil
     flushed = 0
     for bd in base_dirs:
@@ -502,6 +502,7 @@ def parse_cli_args():
     """Support headless CLI operations: python gerehgosha-cli.py --add-user <user> --password <pass>"""
     import argparse
     parser = argparse.ArgumentParser(description="GerehGosha Management CLI")
+    parser.add_argument("--version", action="version", version=f"GerehGosha CLI v{__version__}")
     parser.add_argument("--list", action="store_true", help="List all registered admin users")
     parser.add_argument("--add-user", type=str, help="Username to create")
     parser.add_argument("--password", type=str, help="Password for user (auto-generated if omitted)")

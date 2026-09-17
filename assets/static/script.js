@@ -1443,7 +1443,549 @@ try {
   obs.observe(target, { childList: true, subtree: true });
 } catch (e) {}
 
+// ==========================================================================
+// Language Switching & Internationalization (i18n)
+// ==========================================================================
+const I18N_DICT = {
+  en: {
+    brand_subtitle: "Autonomous Tor Mesh Orchestrator",
+    indicator_engine: "ENGINE:",
+    indicator_circuits: "CIRCUITS:",
+    nav_settings: "Settings",
+    nav_settings_title: "Engine Settings",
+    nav_inject: "Inject PasarGuard",
+    nav_inject_title: "Inject Inbounds to PasarGuard",
+    nav_logout_title: "Logout from Gateway",
+    metric_active_circuits: "Active Proxy Circuits",
+    metric_distributed_socks: "Distributed SOCKS5 Endpoints",
+    metric_consensus: "Tor Consensus & Discovery",
+    discovery_ready: "Ready to start.",
+    label_max_nodes: "Max Nodes:",
+    btn_start_engine: "Start Engine",
+    btn_stop_engine: "Stop",
+    btn_select_locations: "Select Locations",
+    btn_locations_title: "Discover & pick your active exit locations",
+    monitoring_title: "Live Node Monitoring Console",
+    monitoring_subtitle: "Real-time health verification, IP Geolocation, and TCP Latency telemetry",
+    search_placeholder: "Search country, port, or status...",
+    th_country: "COUNTRY",
+    th_socks_port: "SOCKS PORT",
+    th_exit_node: "EXIT NODE LOCATION",
+    th_ping: "PING (TCP)",
+    th_status: "HEALTH STATUS",
+    lifecycle_title: "PasarGuard Group A Lifecycle Controls",
+    lifecycle_subtitle: "Manage batch state, toggle routing rules, or perform bulk cleanup across PasarGuard cores",
+    enable_group_title: "Enable Group A",
+    enable_group_desc: "Activate all injected Tor inbound listeners",
+    btn_enable: "Enable",
+    disable_group_title: "Disable Group A",
+    disable_group_desc: "Pause Tor inbound listeners without deletion",
+    btn_disable: "Disable",
+    cleanup_title: "Bulk Clean Up",
+    cleanup_desc: "Permanently remove Tor nodes & routing rules",
+    btn_purge: "Purge All",
+    settings_modal_title: "Engine Resource Tuning",
+    lbl_ping_interval: "Ping Interval (Seconds)",
+    hint_ping: "Higher = Lower CPU load",
+    lbl_ram_limit: "Tor RAM Limit (MB)",
+    hint_ram: "Per proxy instance (e.g. 15)",
+    lbl_bw_limit: "Bandwidth Limit (KB/s)",
+    hint_bw: "0 = Unlimited",
+    lbl_workers: "Scheduler Workers",
+    hint_workers: "0 = Auto (Optimized per CPU core)",
+    lbl_exit_mode: "Exit Relay Selection",
+    hint_exit_mode: "How Tor picks the exit inside each country",
+    opt_exit_country: "Whole country, consensus-weighted (recommended)",
+    opt_exit_relays: "Pin top relays by consensus weight (stricter, more fragile)",
+    lbl_pin_guards: "Pin regional entry guards",
+    hint_pin_guards: "Off is safer: pinned guards + strict nodes can block all circuits",
+    lbl_host_country: "Host Server Location",
+    hint_host_country: "Only used when guard pinning is on",
+    host_country_placeholder: "Leave blank for automatic IP detection",
+    lbl_preferred_countries: "Preferred Exit Countries",
+    hint_preferred_countries: "Only the checked locations are launched",
+    btn_scan_network: "Live Network Scan",
+    filter_locations_placeholder: "Filter locations (e.g. iceland, jp, nl)",
+    btn_select_all: "Select All",
+    btn_select_all_title: "Select every discovered location",
+    btn_top10: "Top 10",
+    btn_top10_title: "Select the 10 locations with the most exit relays",
+    btn_clear: "Clear",
+    btn_clear_title: "Clear the current selection",
+    no_locations_selected: "No locations selected yet.",
+    countries_placeholder: "Click 'Live Network Scan' to discover currently active Tor exit nodes...",
+    btn_save_settings: "Save & Apply Configuration",
+    inject_modal_title: "Inject to PasarGuard Core",
+    lbl_pasargard_url: "PasarGuard Panel URL",
+    lbl_pasargard_token: "Admin API Bearer Token",
+    lbl_local_tor: "Tor engine runs on the SAME server as Xray (outbounds dial 127.0.0.1 — recommended)",
+    lbl_remote_tor: "Remote Tor Engine Address",
+    hint_remote_tor: "Only if Xray is on another server. That host must expose the SOCKS ports.",
+    lbl_target_core: "Target Core",
+    hint_target_core: "Select destination Xray/SingBox core",
+    opt_load_cores_first: "-- Load Cores First --",
+    btn_load_cores: "Load Cores",
+    lbl_template_inbound: "Template Inbound",
+    hint_template_inbound: "Clones protocol & security only — its port is ignored",
+    opt_load_inbounds_first: "-- Load Inbounds First --",
+    btn_load_inbounds: "Load Inbounds",
+    lbl_port_strategy: "Inbound Port Strategy",
+    hint_port_strategy: "How each node's client-facing port is chosen",
+    opt_strategy_base: "Sequential from base port (default)",
+    opt_strategy_keep: "Keep the port existing hosts already use",
+    opt_strategy_cf: "Cloudflare-proxyable TLS ports (2053, 2083, 2087, 2096, 8443, 443)",
+    lbl_base_inbound_port: "Base Inbound Port",
+    hint_base_port: "Nodes are numbered upward from here",
+    btn_renumber: "Re-number",
+    btn_renumber_title: "Re-number every node sequentially from the base port",
+    btn_save_ports: "Save Ports",
+    btn_save_ports_title: "Remember these ports for future injections",
+    lbl_queued_nodes: "Nodes Queued for Injection",
+    hint_queued_nodes: "Inbound port is editable — the outbound always keeps each location's fixed SOCKS port",
+    btn_diagnose: "Test Connectivity",
+    btn_diagnose_title: "Check Tor SOCKS liveness and whether the inbound ports are reachable",
+    loading_active_instances: "Loading active instances...",
+    btn_execute_inject: "Execute Injection",
+    toast_lang_changed: "Language changed to English",
+  },
+  fa: {
+    brand_subtitle: "ارکستراتور مش خودکار شبکه تور",
+    indicator_engine: "موتور:",
+    indicator_circuits: "مسیرها:",
+    nav_settings: "تنظیمات",
+    nav_settings_title: "تنظیمات موتور",
+    nav_inject: "اتصال به پاسارگارد",
+    nav_inject_title: "تزریق اینباندها به پاسارگارد",
+    nav_logout_title: "خروج از گیت‌وی",
+    metric_active_circuits: "مدارهای فعال پروکسی",
+    metric_distributed_socks: "نقاط پایانی توزیع‌شده SOCKS5",
+    metric_consensus: "اجماع و کشف نودهای تور",
+    discovery_ready: "آماده راه‌اندازی.",
+    label_max_nodes: "حداکثر نودها:",
+    btn_start_engine: "شروع موتور",
+    btn_stop_engine: "توقف",
+    btn_select_locations: "انتخاب موقعیت‌ها",
+    btn_locations_title: "کشف و انتخاب لوکیشن‌های خروجی",
+    monitoring_title: "کنسول مانیتورینگ زنده نودها",
+    monitoring_subtitle: "بررسی بلادرنگ سلامت نودها، مکان‌یابی IP و تله‌متری تأخیر TCP",
+    search_placeholder: "جستجوی کشور، پورت یا وضعیت...",
+    th_country: "کشور",
+    th_socks_port: "پورت ساکس",
+    th_exit_node: "موقعیت نود خروجی",
+    th_ping: "پینگ (TCP)",
+    th_status: "وضعیت سلامت",
+    lifecycle_title: "مدیریت چرخه حیات گروه A در پاسارگارد",
+    lifecycle_subtitle: "مدیریت وضعیت گروهی، تغییر قوانین روتینگ یا پاکسازی یکباره نودها",
+    enable_group_title: "فعال‌سازی گروه A",
+    enable_group_desc: "فعال کردن تمامی شنوندگان اینباند تزریق‌شده تور",
+    btn_enable: "فعال‌سازی",
+    disable_group_title: "غیرفعال‌سازی گروه A",
+    disable_group_desc: "توقف موقت اینباندهای تور بدون حذف اطلاعات",
+    btn_disable: "غیرفعال‌سازی",
+    cleanup_title: "پاکسازی یکباره",
+    cleanup_desc: "حذف کامل نودهای تور و قوانین روتینگ مربوطه",
+    btn_purge: "حذف همگانی",
+    settings_modal_title: "تنظیم و بهینه‌سازی منابع موتور",
+    lbl_ping_interval: "بازه زمانی پینگ (ثانیه)",
+    hint_ping: "عدد بالاتر = بار پردازشی کمتر",
+    lbl_ram_limit: "محدودیت رم تور (مگابایت)",
+    hint_ram: "به ازای هر نمونه پروکسی (مثلاً ۱۵)",
+    lbl_bw_limit: "محدودیت پهنای باند (KB/s)",
+    hint_bw: "۰ = نامحدود",
+    lbl_workers: "تعداد ورکر زمان‌بند",
+    hint_workers: "۰ = خودکار (بهینه‌سازی بر اساس هسته پردازنده)",
+    lbl_exit_mode: "روش انتخاب رله خروجی",
+    hint_exit_mode: "نحوه انتخاب رله خروجی در هر کشور",
+    opt_exit_country: "کل کشور، وزن‌دهی شده بر اساس اجماع (پیشنهادی)",
+    opt_exit_relays: "پین کردن برترین رله‌ها بر اساس وزن (دقیق‌تر اما شکننده‌تر)",
+    lbl_pin_guards: "پین کردن گاردهای ورودی منطقه‌ای",
+    hint_pin_guards: "خاموش بودن امن‌تر است",
+    lbl_host_country: "موقعیت سرور میزبان",
+    hint_host_country: "فقط هنگام روشن بودن پین گارد استفاده می‌شود",
+    host_country_placeholder: "برای تشخیص خودکار IP خالی بگذارید",
+    lbl_preferred_countries: "کشورهای خروجی مورد نظر",
+    hint_preferred_countries: "تنها موقعیت‌های انتخاب‌شده اجرا خواهند شد",
+    btn_scan_network: "اسکن زنده شبکه",
+    filter_locations_placeholder: "فیلتر موقعیت‌ها (مثال: iceland, jp, nl)",
+    btn_select_all: "انتخاب همه",
+    btn_select_all_title: "انتخاب تمامی موقعیت‌های کشف‌شده",
+    btn_top10: "۱۰ کشور برتر",
+    btn_top10_title: "انتخاب ۱۰ کشور با بیشترین رله‌های خروجی",
+    btn_clear: "پاک کردن",
+    btn_clear_title: "پاک کردن انتخاب‌های فعلی",
+    no_locations_selected: "هنوز موقعیتی انتخاب نشده است.",
+    countries_placeholder: "برای کشف نودهای فعال تور روی «اسکن زنده شبکه» کلیک کنید...",
+    btn_save_settings: "ذخیره و اعمال پیکربندی",
+    inject_modal_title: "تزریق به هسته پاسارگارد",
+    lbl_pasargard_url: "آدرس پنل پاسارگارد",
+    lbl_pasargard_token: "توکن دسترسی API ادمین",
+    lbl_local_tor: "موتور تور روی همین سرور Xray اجرا می‌شود (پیشنهادی)",
+    lbl_remote_tor: "آدرس موتور تور ریموت",
+    hint_remote_tor: "فقط اگر Xray روی سرور دیگری است",
+    lbl_target_core: "هسته مقصد",
+    hint_target_core: "انتخاب هسته مقصد Xray/SingBox",
+    opt_load_cores_first: "-- ابتدا هسته‌ها را بارگذاری کنید --",
+    btn_load_cores: "بارگذاری هسته‌ها",
+    lbl_template_inbound: "اینباند الگو",
+    hint_template_inbound: "فقط پروتکل و امنیت کپی می‌شود — پورت آن نادیده گرفته می‌شود",
+    opt_load_inbounds_first: "-- ابتدا اینباندها را بارگذاری کنید --",
+    btn_load_inbounds: "بارگذاری اینباندها",
+    lbl_port_strategy: "استراتژی پورت اینباند",
+    hint_port_strategy: "نحوه انتخاب پورت سمت کاربر برای هر نود",
+    opt_strategy_base: "ترتیبی از پورت پایه (پیش‌فرض)",
+    opt_strategy_keep: "حفظ پورت‌های قبلی هاست‌ها",
+    opt_strategy_cf: "پورت‌های TLS سازگار با کلودفلر (2053, 2083, 2087, 2096, 8443, 443)",
+    lbl_base_inbound_port: "پورت پایه اینباند",
+    hint_base_port: "نودها به ترتیب از این پورت شماره‌گذاری می‌شوند",
+    btn_renumber: "شماره‌گذاری مجدد",
+    btn_renumber_title: "شماره‌گذاری مجدد نودها به صورت ترتیبی از پورت پایه",
+    btn_save_ports: "ذخیره پورت‌ها",
+    btn_save_ports_title: "به خاطر سپردن این پورت‌ها برای تزریق‌های آینده",
+    lbl_queued_nodes: "نودهای آماده تزریق",
+    hint_queued_nodes: "پورت اینباند قابل ویرایش است",
+    btn_diagnose: "تست اتصال",
+    btn_diagnose_title: "بررسی برقراری ساکس تور و در دسترس بودن پورت‌های اینباند",
+    loading_active_instances: "در حال بارگذاری نودهای فعال...",
+    btn_execute_inject: "اجرای عملیات تزریق",
+    toast_lang_changed: "زبان به فارسی تغییر یافت",
+  },
+  ru: {
+    brand_subtitle: "Автономный оркестратор сети Tor Mesh",
+    indicator_engine: "ДВИЖОК:",
+    indicator_circuits: "ЦЕПИ:",
+    nav_settings: "Настройки",
+    nav_settings_title: "Настройки движка",
+    nav_inject: "Интеграция PasarGuard",
+    nav_inject_title: "Инъекция входящих подключений в PasarGuard",
+    nav_logout_title: "Выйти из шлюза",
+    metric_active_circuits: "Активные прокси-цепи",
+    metric_distributed_socks: "Распределенные конечные точки SOCKS5",
+    metric_consensus: "Консенсус и обнаружение Tor",
+    discovery_ready: "Готов к запуску.",
+    label_max_nodes: "Макс. узлов:",
+    btn_start_engine: "Запустить движок",
+    btn_stop_engine: "Остановить",
+    btn_select_locations: "Выбрать локации",
+    btn_locations_title: "Обнаружить и выбрать локации выхода",
+    monitoring_title: "Консоль мониторинга узлов в реальном времени",
+    monitoring_subtitle: "Проверка работоспособности, IP геолокация и телеметрия задержки TCP",
+    search_placeholder: "Поиск страны, порта или статуса...",
+    th_country: "СТРАНА",
+    th_socks_port: "SOCKS ПОРТ",
+    th_exit_node: "ЛОКАЦИЯ ВЫХОДА",
+    th_ping: "ПИНГ (TCP)",
+    th_status: "СТАТУС",
+    lifecycle_title: "Управление жизненным циклом группы A в PasarGuard",
+    lifecycle_subtitle: "Управление состоянием пакета, правилами маршрутизации или очистка узлов",
+    enable_group_title: "Включить группу A",
+    enable_group_desc: "Активировать все входящие слушатели Tor",
+    btn_enable: "Включить",
+    disable_group_title: "Отключить группу A",
+    disable_group_desc: "Приостановить входящие слушатели Tor без удаления",
+    btn_disable: "Отключить",
+    cleanup_title: "Полная очистка",
+    cleanup_desc: "Удалить узлы Tor и правила маршрутизации",
+    btn_purge: "Удалить все",
+    settings_modal_title: "Настройка ресурсов движка",
+    lbl_ping_interval: "Интервал пинга (сек)",
+    hint_ping: "Больше = меньше нагрузка на CPU",
+    lbl_ram_limit: "Лимит RAM для Tor (МБ)",
+    hint_ram: "На каждый процесс прокси (напр. 15)",
+    lbl_bw_limit: "Лимит пропускной способности (КБ/с)",
+    hint_bw: "0 = без ограничений",
+    lbl_workers: "Количество воркеров",
+    hint_workers: "0 = авто (оптимально для ядер CPU)",
+    lbl_exit_mode: "Выбор выходных реле",
+    hint_exit_mode: "Как Tor выбирает выходные узлы в каждой стране",
+    opt_exit_country: "Вся страна, взвешенная по консенсусу (рекомендуется)",
+    opt_exit_relays: "Закрепить лучшие реле по весу консенсуса",
+    lbl_pin_guards: "Закрепить региональные входные узлы",
+    hint_pin_guards: "Выключено безопаснее",
+    lbl_host_country: "Локация хост-сервера",
+    hint_host_country: "Используется только при включенном закреплении",
+    host_country_placeholder: "Оставьте пустым для автоопределения IP",
+    lbl_preferred_countries: "Предпочитаемые страны выхода",
+    hint_preferred_countries: "Будут запущены только выбранные локации",
+    btn_scan_network: "Сканировать сеть",
+    filter_locations_placeholder: "Фильтр локаций (напр. iceland, jp, nl)",
+    btn_select_all: "Выбрать все",
+    btn_select_all_title: "Выбрать все обнаруженные локации",
+    btn_top10: "Топ 10",
+    btn_top10_title: "Выбрать 10 стран с наибольшим числом реле",
+    btn_clear: "Очистить",
+    btn_clear_title: "Очистить текущий выбор",
+    no_locations_selected: "Локации еще не выбраны.",
+    countries_placeholder: "Нажмите 'Сканировать сеть' для поиска активных узлов Tor...",
+    btn_save_settings: "Сохранить и применить",
+    inject_modal_title: "Инъекция в ядро PasarGuard",
+    lbl_pasargard_url: "URL панели PasarGuard",
+    lbl_pasargard_token: "Токен доступа API администратора",
+    lbl_local_tor: "Движок Tor работает на том же сервере, что и Xray (рекомендуется)",
+    lbl_remote_tor: "Адрес удаленного движка Tor",
+    hint_remote_tor: "Только если Xray находится на другом сервере",
+    lbl_target_core: "Целевое ядро",
+    hint_target_core: "Выберите целевое ядро Xray/SingBox",
+    opt_load_cores_first: "-- Сначала загрузите ядра --",
+    btn_load_cores: "Загрузить ядра",
+    lbl_template_inbound: "Шаблон входящего",
+    hint_template_inbound: "Клонирует только протокол и безопасность",
+    opt_load_inbounds_first: "-- Сначала загрузите входящие --",
+    btn_load_inbounds: "Загрузить входящие",
+    lbl_port_strategy: "Стратегия портов",
+    hint_port_strategy: "Как выбирается порт каждого узла для клиентов",
+    opt_strategy_base: "Последовательно от базового порта (по умолчанию)",
+    opt_strategy_keep: "Сохранять существующие порты",
+    opt_strategy_cf: "TLS-порты, совместимые с Cloudflare (2053, 2083, 2087, 2096, 8443, 443)",
+    lbl_base_inbound_port: "Базовый порт",
+    hint_base_port: "Узлы нумеруются по возрастанию от этого порта",
+    btn_renumber: "Перенумеровать",
+    btn_renumber_title: "Перенумеровать узлы последовательно от базового порта",
+    btn_save_ports: "Сохранить порты",
+    btn_save_ports_title: "Запомнить эти порты для будущих инъекций",
+    lbl_queued_nodes: "Узлы в очереди на инъекцию",
+    hint_queued_nodes: "Входящий порт можно редактировать",
+    btn_diagnose: "Проверить подключение",
+    btn_diagnose_title: "Проверка доступности SOCKS Tor и портов",
+    loading_active_instances: "Загрузка активных экземпляров...",
+    btn_execute_inject: "Выполнить инъекцию",
+    toast_lang_changed: "Язык изменен на русский",
+  },
+  zh: {
+    brand_subtitle: "自主 Tor 网状网络编排器",
+    indicator_engine: "引擎状态:",
+    indicator_circuits: "活动线路:",
+    nav_settings: "设置",
+    nav_settings_title: "引擎资源设置",
+    nav_inject: "注入 PasarGuard",
+    nav_inject_title: "向 PasarGuard 注入入站配置",
+    nav_logout_title: "退出网关登录",
+    metric_active_circuits: "活跃代理线路",
+    metric_distributed_socks: "分布式 SOCKS5 节点",
+    metric_consensus: "Tor 共识与节点发现",
+    discovery_ready: "准备启动。",
+    label_max_nodes: "最大节点数:",
+    btn_start_engine: "启动引擎",
+    btn_stop_engine: "停止",
+    btn_select_locations: "选择节点位置",
+    btn_locations_title: "发现并挑选活跃的出口位置",
+    monitoring_title: "实时节点监控控制台",
+    monitoring_subtitle: "实时健康验证、IP地理位置及TCP延迟遥测",
+    search_placeholder: "搜索国家、端口或状态...",
+    th_country: "国家",
+    th_socks_port: "SOCKS 端口",
+    th_exit_node: "出口节点位置",
+    th_ping: "延迟 (TCP)",
+    th_status: "健康状态",
+    lifecycle_title: "PasarGuard A 组生命周期控制",
+    lifecycle_subtitle: "批量管理状态、切换路由规则或在核心间执行清理",
+    enable_group_title: "启用 A 组",
+    enable_group_desc: "激活所有已注入的 Tor 入站侦听器",
+    btn_enable: "启用",
+    disable_group_title: "停用 A 组",
+    disable_group_desc: "暂停 Tor 入站侦听器（不删除配置）",
+    btn_disable: "停用",
+    cleanup_title: "批量清除",
+    cleanup_desc: "永久移除 Tor 节点及相关路由规则",
+    btn_purge: "全部清除",
+    settings_modal_title: "引擎资源调优",
+    lbl_ping_interval: "Ping 检测间隔（秒）",
+    hint_ping: "数值越大 = CPU负载越低",
+    lbl_ram_limit: "Tor 内存限制 (MB)",
+    hint_ram: "每个代理实例（例如 15）",
+    lbl_bw_limit: "带宽限制 (KB/s)",
+    hint_bw: "0 = 无限制",
+    lbl_workers: "调度工作线程",
+    hint_workers: "0 = 自动（根据 CPU 核心优化）",
+    lbl_exit_mode: "出口中继选择模式",
+    hint_exit_mode: "Tor 如何挑选各国境内的出口",
+    opt_exit_country: "整个国家，按共识权重分配（推荐）",
+    opt_exit_relays: "按共识权重锁定顶级中继（更严格但也更脆弱）",
+    lbl_pin_guards: "固定区域入口守卫",
+    hint_pin_guards: "关闭更安全：锁死入口加严格节点可能阻断线路",
+    lbl_host_country: "主机服务器位置",
+    hint_host_country: "仅在启用守卫固定时生效",
+    host_country_placeholder: "留空以进行自动 IP 检测",
+    lbl_preferred_countries: "偏好的出口国家/地区",
+    hint_preferred_countries: "仅启动勾选的节点位置",
+    btn_scan_network: "扫描在线网络",
+    filter_locations_placeholder: "过滤位置（如 iceland, jp, nl）",
+    btn_select_all: "全选",
+    btn_select_all_title: "选择所有已发现的节点位置",
+    btn_top10: "前10名",
+    btn_top10_title: "选择出口中继最多的 10 个国家/地区",
+    btn_clear: "清空",
+    btn_clear_title: "清除当前所有选择",
+    no_locations_selected: "尚未选择任何节点位置。",
+    countries_placeholder: "点击“扫描在线网络”以发现当前活跃的 Tor 出口节点...",
+    btn_save_settings: "保存并应用配置",
+    inject_modal_title: "注入到 PasarGuard 核心",
+    lbl_pasargard_url: "PasarGuard 面板 URL",
+    lbl_pasargard_token: "管理员 API 访问令牌",
+    lbl_local_tor: "Tor 引擎与 Xray 运行在同一台服务器上（推荐）",
+    lbl_remote_tor: "远程 Tor 引擎地址",
+    hint_remote_tor: "仅在 Xray 位于另一台服务器时使用",
+    lbl_target_core: "目标核心",
+    hint_target_core: "选择目标 Xray/SingBox 核心",
+    opt_load_cores_first: "-- 请先加载核心列表 --",
+    btn_load_cores: "加载核心",
+    lbl_template_inbound: "模板入站",
+    hint_template_inbound: "仅复制协议与安全配置，其端口会被忽略",
+    opt_load_inbounds_first: "-- 请先加载入站列表 --",
+    btn_load_inbounds: "加载入站",
+    lbl_port_strategy: "入站端口分配策略",
+    hint_port_strategy: "如何为每个节点指定面向客户端的端口",
+    opt_strategy_base: "从基础端口按顺序递增（默认）",
+    opt_strategy_keep: "保留现有主机正在使用的端口",
+    opt_strategy_cf: "兼容 Cloudflare 代理的 TLS 端口 (2053, 2083, 2087, 2096, 8443, 443)",
+    lbl_base_inbound_port: "基础入站端口",
+    hint_base_port: "节点将从该端口开始向上依次递增",
+    btn_renumber: "重新编号",
+    btn_renumber_title: "从基础端口开始按顺序为所有节点重新编号",
+    btn_save_ports: "保存端口",
+    btn_save_ports_title: "记住这些端口以便将来注入使用",
+    lbl_queued_nodes: "等待注入的节点",
+    hint_queued_nodes: "入站端口可直接编辑",
+    btn_diagnose: "测试连通性",
+    btn_diagnose_title: "检查 Tor SOCKS 存活情况及入站端口是否可达",
+    loading_active_instances: "正在加载活跃实例...",
+    btn_execute_inject: "执行注入操作",
+    toast_lang_changed: "界面语言已切换为中文",
+  }
+};
+
+let currentLang = "en";
+
+function applyLanguage(lang) {
+  if (!I18N_DICT[lang]) lang = "en";
+  currentLang = lang;
+
+  document.documentElement.lang = lang;
+  document.documentElement.dir = (lang === "fa" ? "rtl" : "ltr");
+
+  // Update navbar badge
+  const tagEl = document.getElementById("current-lang-tag");
+  if (tagEl) {
+    tagEl.textContent = lang.toUpperCase();
+  }
+
+  // Update active state in dropdown
+  document.querySelectorAll(".lang-option-btn").forEach(btn => {
+    if (btn.getAttribute("data-lang") === lang) {
+      btn.classList.add("active");
+    } else {
+      btn.classList.remove("active");
+    }
+  });
+
+  const dict = I18N_DICT[lang];
+
+  // Translate all [data-i18n]
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (dict[key]) {
+      el.textContent = dict[key];
+    }
+  });
+
+  // Translate all [data-i18n-placeholder]
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+    const key = el.getAttribute("data-i18n-placeholder");
+    if (dict[key]) {
+      el.setAttribute("placeholder", dict[key]);
+    }
+  });
+
+  // Translate all [data-i18n-title]
+  document.querySelectorAll("[data-i18n-title]").forEach(el => {
+    const key = el.getAttribute("data-i18n-title");
+    if (dict[key]) {
+      el.setAttribute("title", dict[key]);
+    }
+  });
+}
+
+async function setLanguage(lang) {
+  applyLanguage(lang);
+  
+  // Close menu
+  const menu = document.getElementById("lang-dropdown-menu");
+  const container = document.querySelector(".lang-dropdown-container");
+  if (menu) menu.classList.add("hidden");
+  if (container) container.classList.remove("open");
+
+  // Persist to session and DB via API
+  try {
+    document.cookie = `user_lang=${lang}; path=/; max-age=${365 * 86400}; SameSite=Lax`;
+    await fetch("/api/language", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ language: lang })
+    });
+  } catch (e) {
+    console.error("Failed to save language to session:", e);
+  }
+
+  const dict = I18N_DICT[lang];
+  if (dict && dict.toast_lang_changed) {
+    showToast(dict.toast_lang_changed);
+  }
+}
+
+async function initLanguage() {
+  // Bind toggle button
+  const toggleBtn = document.getElementById("btn-lang-toggle");
+  const menu = document.getElementById("lang-dropdown-menu");
+  const container = document.querySelector(".lang-dropdown-container");
+
+  if (toggleBtn && menu) {
+    toggleBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      menu.classList.toggle("hidden");
+      if (container) container.classList.toggle("open");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!toggleBtn.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.add("hidden");
+        if (container) container.classList.remove("open");
+      }
+    });
+  }
+
+  // Bind option buttons
+  document.querySelectorAll(".lang-option-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const selected = btn.getAttribute("data-lang");
+      if (selected) {
+        setLanguage(selected);
+      }
+    });
+  });
+
+  // Retrieve preferred language from session via /api/language
+  let initialLang = "en";
+  try {
+    const res = await fetch("/api/language");
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.language && I18N_DICT[data.language]) {
+        initialLang = data.language;
+      }
+    }
+  } catch (e) {
+    // Fallback to cookie
+    const match = document.cookie.match(/user_lang=([a-zA-Z]+)/);
+    if (match && I18N_DICT[match[1]]) {
+      initialLang = match[1];
+    }
+  }
+
+  applyLanguage(initialLang);
+}
+
 // Poll telemetry
+initLanguage();
 loadSettings();
 statusInterval = setInterval(fetchStatus, 1500);
 fetchStatus();
+

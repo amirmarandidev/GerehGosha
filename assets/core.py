@@ -183,6 +183,9 @@ def resolve_tor_cmd():
         os.getcwd(),
         os.path.join(os.getcwd(), "Tor"),
         os.path.join(os.getcwd(), "tor"),
+        os.path.join(os.getcwd(), "assets"),
+        os.path.join(os.getcwd(), "assets", "Tor"),
+        os.path.join(os.getcwd(), "assets", "tor"),
         os.path.join(os.getcwd(), "pasarguard-tor"),
         os.path.join(os.getcwd(), "pasarguard-tor", "Tor"),
         os.path.join(os.getcwd(), "pasarguard-tor", "tor")

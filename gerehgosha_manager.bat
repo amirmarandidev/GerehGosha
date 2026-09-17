@@ -86,11 +86,11 @@ cls
 echo ==============================================================
 echo   Downloading Tor Expert Bundle and GeoIP for Windows...
 echo ==============================================================
-if not exist "pasarguard-tor\Tor" mkdir "pasarguard-tor\Tor"
+if not exist "assets\Tor" mkdir "assets\Tor"
 echo [*] Downloading from dist.torproject.org...
 curl -sSL "https://dist.torproject.org/torbrowser/15.0.17/tor-expert-bundle-windows-x86_64-15.0.17.tar.gz" -o "%TEMP%\tor_bundle.tar.gz"
 if exist "%TEMP%\tor_bundle.tar.gz" (
-    tar -xzf "%TEMP%\tor_bundle.tar.gz" -C "pasarguard-tor"
+    tar -xzf "%TEMP%\tor_bundle.tar.gz" -C "assets"
     del "%TEMP%\tor_bundle.tar.gz" >nul 2>&1
     echo [+] Successfully updated Tor Engine and GeoIP database!
 ) else (
