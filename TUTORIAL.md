@@ -81,5 +81,3 @@ graph LR
   ```
 
 ---
-
-*(This tutorial template is ready for further custom guides and screenshots).*
